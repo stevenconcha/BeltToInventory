@@ -1,12 +1,12 @@
 <?php
 App::uses('AppModel', 'Model');
 /**
- * City Model
+ * Usuariorole Model
  *
- * @property Country $Country
- * @property State $State
+ * @property Role $Role
+ * @property Usuario $Usuario
  */
-class City extends AppModel {
+class Usuariorole extends AppModel {
 
 /**
  * Validation rules
@@ -14,7 +14,7 @@ class City extends AppModel {
  * @var array
  */
 	public $validate = array(
-		'country_id' => array(
+		'role_id' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
 				//'message' => 'Your custom message here',
@@ -24,7 +24,7 @@ class City extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'state_id' => array(
+		'usuario_id' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
 				//'message' => 'Your custom message here',
@@ -34,9 +34,9 @@ class City extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'city_name' => array(
-			'notBlank' => array(
-				'rule' => array('notBlank'),
+		'activo' => array(
+			'numeric' => array(
+				'rule' => array('numeric'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -54,16 +54,16 @@ class City extends AppModel {
  * @var array
  */
 	public $belongsTo = array(
-		'Country' => array(
-			'className' => 'Country',
-			'foreignKey' => 'country_id',
+		'Role' => array(
+			'className' => 'Role',
+			'foreignKey' => 'role_id',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
 		),
-		'State' => array(
-			'className' => 'State',
-			'foreignKey' => 'state_id',
+		'User' => array(
+			'className' => 'User',
+			'foreignKey' => 'usuario_id',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''

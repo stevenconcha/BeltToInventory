@@ -1,6 +1,8 @@
 <?php 
 class User extends AppModel 
 {
+
+
     var $name = "User";
 
     var $validate = array(
@@ -99,4 +101,27 @@ class User extends AppModel
             ),
         ),
     );
+
+
+ public function beforeSave($options = array()) {        
+        if (isset($this->data['User']['pass']) && $this->data['User']['pass'] != "") {
+            $this->data['User']['pass'] = AuthComponent::password($this->data['User']['pass']);            
+        }
+        return true;
+    }
+
+    /**
+     * hasMany associations
+     *
+     * @var array
+     */
+    public $hasMany = array(
+        'Usuariorole' => array(
+            'className' => 'Usuariorole',
+            'foreignKey' => 'usuario_id',
+            'dependent' => false,
+            'conditions' => '',
+        )
+    );
+
 }
