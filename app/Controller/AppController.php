@@ -31,5 +31,74 @@ App::uses('Controller', 'Controller');
  * @link		http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
 class AppController extends Controller {
-    public $components = array(); //'DebugKit.Toolbar'
+    //public $components = array(); //'DebugKit.Toolbar'
+/*
+ public $components = array(
+        'Session',
+        'Auth' => array(
+            'loginRedirect' => array(
+                'controller' => 'posts',
+                'action' => 'index'
+            ),
+            'logoutRedirect' => array(
+                'controller' => 'pages',
+                'action' => 'display',
+                'home'
+            ),
+            'authenticate' => array(
+                'Form' => array(
+                    'passwordHasher' => 'Blowfish'
+                )
+            )
+        )
+    );
+    */
+
+
+ public $components = array(
+        'Session',
+        'Auth' => array(
+            "loginRedirect" => array("controller" => "pages", "action" => "display"),
+            "logoutRedirect" => array("controller" => "pages", "action" => "display"),
+            'loginAction' => array(
+                'controller' => 'users',
+                'action' => 'login'
+            ),
+            "authError" => "No tienes permisos para ingresar en esta pagina",
+        ),
+        'Security' => array(
+            "csrfExpires" => '+1 hour',
+            "csrfUseOnce" => false
+        ),
+    );
+
+    public function isAuthorized() {
+        return true;
+    }
+
+    public function checkPermission($keys) {
+        $roles = $this->Session->read("roles");
+        if ($keys == null || !is_array($keys)) {
+            if($keys == "All" && count($roles) > 0){
+                return;
+            }else{
+                $this->redirect(array("controller" => "error", "action" => "invalidRol"));
+            }
+        }
+        for ($i = 0; $i < count($keys); $i++) {
+            for ($j = 1; $j <= count($roles); $j++) {
+                if ($roles[$j]['nombre'] == $keys[$i] & $roles[$j]['activo'] == 1) {
+                    return;
+                }
+            }
+        }
+        $this->redirect(array("controller" => "error", "action" => "invalidRol"));
+    }
+	
+    public function beforeFilter() {
+        $this->Auth->allow('index', 'view');
+    
+    }
+
+
 }

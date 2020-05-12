@@ -1,3 +1,4 @@
+<?php App::import("Helper", "Menu"); ?>
 <aside class="main-sidebar">
 		<!-- sidebar: style can be found in sidebar.less -->
 		<section class="sidebar" style="height: auto;">

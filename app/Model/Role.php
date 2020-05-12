@@ -1,12 +1,11 @@
 <?php
 App::uses('AppModel', 'Model');
 /**
- * City Model
+ * Role Model
  *
- * @property Country $Country
- * @property State $State
+ * @property Usuariorole $Usuariorole
  */
-class City extends AppModel {
+class Role extends AppModel {
 
 /**
  * Validation rules
@@ -14,9 +13,9 @@ class City extends AppModel {
  * @var array
  */
 	public $validate = array(
-		'country_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
+		'nombre' => array(
+			'notBlank' => array(
+				'rule' => array('notBlank'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -24,17 +23,7 @@ class City extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'state_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'city_name' => array(
+		'descripcion' => array(
 			'notBlank' => array(
 				'rule' => array('notBlank'),
 				//'message' => 'Your custom message here',
@@ -49,24 +38,24 @@ class City extends AppModel {
 	// The Associations below have been created with all possible keys, those that are not needed can be removed
 
 /**
- * belongsTo associations
+ * hasMany associations
  *
  * @var array
  */
-	public $belongsTo = array(
-		'Country' => array(
-			'className' => 'Country',
-			'foreignKey' => 'country_id',
+	public $hasMany = array(
+		'Usuariorole' => array(
+			'className' => 'Usuariorole',
+			'foreignKey' => 'role_id',
+			'dependent' => false,
 			'conditions' => '',
 			'fields' => '',
-			'order' => ''
-		),
-		'State' => array(
-			'className' => 'State',
-			'foreignKey' => 'state_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
 		)
 	);
+
 }
