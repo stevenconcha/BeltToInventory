@@ -1,9 +1,18 @@
 <?php 
+App::import("Model", "Userrole");
+
+
 class UsersController extends AppController 
 {
     public $helpers = array('Html', 'Form', 'Flash');
     public $components = array('Flash');
     public $uses = array('User', 'Country', 'State', 'City');
+ 
+    public function beforeFilter() {
+        parent::beforeFilter();
+        $this->Auth->allow('add', 'logout');
+    }
+    
 
     public function index()
     {
@@ -55,6 +64,7 @@ class UsersController extends AppController
 
     public function add()
     {   
+         $this->checkPermission(array("Administrador")); // agregado por steven
         $countries = $this->Country->find('all');
         $country_arr = array('' => '--Select one--');
         foreach ($countries as &$country) {
@@ -166,4 +176,174 @@ class UsersController extends AppController
         echo json_encode($city_arr);
         exit;
     }
+
+    /**
+     * login method
+     */
+    /*
+    public function login() {
+        if ($this->Session->read('user')) {
+            $this->redirect('/users/index');
+        }
+
+        if ($this->request->is("post")) {
+            if ($this->Auth->login($this->request->data['User']['document'])) {
+                $this->User->recursive = 0;
+                $document = $this->Auth->user();
+                $user = $this->User->find("first", array("conditions" => array(
+                        "User.document" => $document,
+                        "User.pass" => AuthComponent::password($this->request->data['User']['pass'])
+                )));
+
+                if (count($user) < 1) {
+                    $this->Session->destroy();
+                    $this->Session->setFlash("Informacion de Usuario no valida");
+                    $this->redirect($this->Auth->logout());
+                }
+
+                if ($user['User']['status'] == 0) {
+                    $this->Session->destroy();
+                    $this->Session->setFlash("Informacion de User no valida");
+                    $this->redirect($this->Auth->logout());
+                }
+                $i = 1;
+                $this->User->Userrole->recursive = 0;
+                $rolesAsignados = $this->User->Userrole->find("all", array("fields" => array(
+                        'Role.*', 'Userrole.*'), "conditions" => array(
+                        "Userrole.User_id" => $user['User']['id'],
+                        "Userrole.activo" => 1),
+                ));
+                if (empty($rolesAsignados)) {
+                    $this->Session->destroy();
+                    $this->redirect($this->Auth->logout());
+                }
+                $lider = null;
+                $liderId = null;
+                $instructor = null;
+
+                foreach ($rolesAsignados as $rolAsignado) {
+                    $roles[$i]['nombre'] = $rolAsignado['Role']['nombre'];
+                    $roles[$i]['descripcion'] = $rolAsignado['Role']['descripcion'];
+                    $roles[$i]['activo'] = $rolAsignado['Userrole']['activo'];
+                    $roles[$i]['Userrole'] = $rolAsignado['Userrole']['id'];
+                    if (isset($rolAsignado['Userrole']['opcional'])) {
+                        if ($rolAsignado['Userrole']['opcional'] != "" || $rolAsignado['Userrole']['opcional'] != null) {
+                            $lider = explode(",", $rolAsignado['Userrole']['opcional']);
+                            $liderId = $rolAsignado['Userrole']['id'];
+                        }
+                    }
+                    if ($rolAsignado['Role']['nombre'] == "Instructor") {
+                        echo $rolAsignado['Role']['nombre'];
+                        $instructor = $rolAsignado['Userrole']['id'];
+                    }
+                    $i++;
+                }
+                if ($lider != null) {
+                    $this->Session->write("lider", $lider);
+                    $this->Session->write("liderId", $liderId);
+                }
+                if ($instructor != null) {
+                    $this->User->Userrole->Userarea->recursive = -1;
+                    $areas = $this->User->Userrole->Userarea->find("all", array(
+                        "conditions" => array("Userarea.Userrole_id" => $instructor)
+                    ));
+                    foreach ($areas as $value) {
+                        $area[] = $value['Userarea']['area_id'];
+                    }
+
+                    if (isset($area)) {
+                        $this->Session->write('areas', $area);
+                    }
+                    $this->Session->write("instructor", $instructor);
+                }
+                $this->Session->write("user", $user);
+                $this->Session->write("roles", $roles);
+
+                $this->redirect('/pages/home');
+            } else {
+                $this->Session->setFlash("Informacion de User no valida");
+            }
+        }
+    }
+    */
+    public function login() {
+
+    if ($this->request->is('post')) {
+                                  
+        if ($this->Auth->login($this->request->data['User']['document'])) {
+
+  // echo "Entro".$this->request->data['User']['pass'];
+   // echo "Entro2 ".AuthComponent::password($this->request->data['User']['pass']);
+  //    exit();  
+              $this->User->recursive = 0;
+                $document = $this->Auth->user();
+                $user = $this->User->find("first", array("conditions" => array(
+                        "User.document" => $document,
+                        "User.pass" => AuthComponent::password($this->request->data['User']['pass'])
+                )));
+                 
+
+                if (count($user) < 1) {
+                    $this->Session->destroy();
+                    $this->Session->setFlash("Informacion de Usuario no valida");
+                    $this->redirect($this->Auth->logout());
+                }
+
+                if ($user['User']['status'] == 0) {
+                    $this->Session->destroy();
+                    $this->Session->setFlash("Informacion de Usuario no valida");
+                    $this->redirect($this->Auth->logout());
+                }  
+           
+                $i = 1;
+                $this->User->Usuariorole->recursive = 0;
+                $rolesAsignados = $this->User->Usuariorole->find("all", array("fields" => array(
+                        'Role.*', 'Usuariorole.*'), "conditions" => array(
+                        "Usuariorole.usuario_id" => $user['User']['id'],
+                        "Usuariorole.activo" => 1),
+                ));
+
+                if (empty($rolesAsignados)) {
+                    $this->Session->destroy();
+                    $this->redirect($this->Auth->logout());
+                }
+                    $lider = null;
+                    $liderId = null;
+
+                    foreach ($rolesAsignados as $rolAsignado) {
+                    $roles[$i]['nombre'] = $rolAsignado['Role']['nombre'];
+                    $roles[$i]['descripcion'] = $rolAsignado['Role']['descripcion'];
+                    $roles[$i]['activo'] = $rolAsignado['Usuariorole']['activo'];
+                    $roles[$i]['usuariorole'] = $rolAsignado['Usuariorole']['id'];
+                    if (isset($rolAsignado['Usuariorole']['opcional'])) {
+                        if ($rolAsignado['Usuariorole']['opcional'] != "" || $rolAsignado['Usuariorole']['opcional'] != null) {
+                            $lider = explode(",", $rolAsignado['Usuariorole']['opcional']);
+                            $liderId = $rolAsignado['Usuariorole']['id'];
+                        }
+                    }
+                    if ($rolAsignado['Role']['nombre'] == "Administrador") {
+                        echo $rolAsignado['Role']['nombre'];
+                        $lider = $rolAsignado['Usuariorole']['id'];
+                    }
+                    $i++;
+                }
+
+                if ($lider != null) {
+                    $this->Session->write("lider", $lider);
+                    $this->Session->write("liderId", $liderId);
+                }
+                
+                $this->Session->write("user", $user);
+                $this->Session->write("roles", $roles);
+
+                $this->redirect('/users/index');
+        }
+        $this->Session->setFlash(__('Informacion invalida, Intentar de nuevo'));
+    }
+}
+
+    public function logout() {
+        return $this->redirect($this->Auth->logout());
+    }
+
 }
