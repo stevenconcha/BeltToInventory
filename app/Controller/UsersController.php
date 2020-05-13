@@ -16,6 +16,7 @@ class UsersController extends AppController
 
     public function index()
     {
+        $this->checkPermission(array("Administrador"));
         $this->paginate = array(
             'conditions' => array('status' => '1'),
             'limit' => 3,
@@ -27,6 +28,7 @@ class UsersController extends AppController
 
     public function view($id = null)
     {
+        $this->checkPermission(array("Administrador"));
         $countries = $this->Country->find('all');
         $country_arr = array('' => '--Select one--');
         foreach ($countries as &$country) {
@@ -64,7 +66,7 @@ class UsersController extends AppController
 
     public function add()
     {   
-         $this->checkPermission(array("Administrador")); // agregado por steven
+        $this->checkPermission(array("Administrador")); // agregado por steven
         $countries = $this->Country->find('all');
         $country_arr = array('' => '--Select one--');
         foreach ($countries as &$country) {
@@ -89,6 +91,7 @@ class UsersController extends AppController
 
     public function edit($id = null)
     {
+        $this->checkPermission(array("Administrador"));
         if (!$id) {
             throw new NotFoundException(__("Invalid user"));
         }
@@ -138,6 +141,7 @@ class UsersController extends AppController
 
     public function delete($id)
     {
+      $this->checkPermission(array("Administrador"));
         if (!$this->request->is('get')) {
             throw new MethodNotAllowedException();
         }
@@ -177,111 +181,26 @@ class UsersController extends AppController
         exit;
     }
 
-    /**
-     * login method
-     */
-    /*
-    public function login() {
-        if ($this->Session->read('user')) {
-            $this->redirect('/users/index');
-        }
-
-        if ($this->request->is("post")) {
-            if ($this->Auth->login($this->request->data['User']['document'])) {
-                $this->User->recursive = 0;
-                $document = $this->Auth->user();
-                $user = $this->User->find("first", array("conditions" => array(
-                        "User.document" => $document,
-                        "User.pass" => AuthComponent::password($this->request->data['User']['pass'])
-                )));
-
-                if (count($user) < 1) {
-                    $this->Session->destroy();
-                    $this->Session->setFlash("Informacion de Usuario no valida");
-                    $this->redirect($this->Auth->logout());
-                }
-
-                if ($user['User']['status'] == 0) {
-                    $this->Session->destroy();
-                    $this->Session->setFlash("Informacion de User no valida");
-                    $this->redirect($this->Auth->logout());
-                }
-                $i = 1;
-                $this->User->Userrole->recursive = 0;
-                $rolesAsignados = $this->User->Userrole->find("all", array("fields" => array(
-                        'Role.*', 'Userrole.*'), "conditions" => array(
-                        "Userrole.User_id" => $user['User']['id'],
-                        "Userrole.activo" => 1),
-                ));
-                if (empty($rolesAsignados)) {
-                    $this->Session->destroy();
-                    $this->redirect($this->Auth->logout());
-                }
-                $lider = null;
-                $liderId = null;
-                $instructor = null;
-
-                foreach ($rolesAsignados as $rolAsignado) {
-                    $roles[$i]['nombre'] = $rolAsignado['Role']['nombre'];
-                    $roles[$i]['descripcion'] = $rolAsignado['Role']['descripcion'];
-                    $roles[$i]['activo'] = $rolAsignado['Userrole']['activo'];
-                    $roles[$i]['Userrole'] = $rolAsignado['Userrole']['id'];
-                    if (isset($rolAsignado['Userrole']['opcional'])) {
-                        if ($rolAsignado['Userrole']['opcional'] != "" || $rolAsignado['Userrole']['opcional'] != null) {
-                            $lider = explode(",", $rolAsignado['Userrole']['opcional']);
-                            $liderId = $rolAsignado['Userrole']['id'];
-                        }
-                    }
-                    if ($rolAsignado['Role']['nombre'] == "Instructor") {
-                        echo $rolAsignado['Role']['nombre'];
-                        $instructor = $rolAsignado['Userrole']['id'];
-                    }
-                    $i++;
-                }
-                if ($lider != null) {
-                    $this->Session->write("lider", $lider);
-                    $this->Session->write("liderId", $liderId);
-                }
-                if ($instructor != null) {
-                    $this->User->Userrole->Userarea->recursive = -1;
-                    $areas = $this->User->Userrole->Userarea->find("all", array(
-                        "conditions" => array("Userarea.Userrole_id" => $instructor)
-                    ));
-                    foreach ($areas as $value) {
-                        $area[] = $value['Userarea']['area_id'];
-                    }
-
-                    if (isset($area)) {
-                        $this->Session->write('areas', $area);
-                    }
-                    $this->Session->write("instructor", $instructor);
-                }
-                $this->Session->write("user", $user);
-                $this->Session->write("roles", $roles);
-
-                $this->redirect('/pages/home');
-            } else {
-                $this->Session->setFlash("Informacion de User no valida");
-            }
-        }
-    }
-    */
+ 
     public function login() {
 
     if ($this->request->is('post')) {
                                   
         if ($this->Auth->login($this->request->data['User']['document'])) {
 
-  // echo "Entro".$this->request->data['User']['pass'];
-   // echo "Entro2 ".AuthComponent::password($this->request->data['User']['pass']);
-  //    exit();  
+        //   echo "Entro ". $this->request->data['User']['pass'];
+        //   echo "Entro2 ". AuthComponent::password($this->request->data['User']['pass']);
+        //   450aea5ebad6dc562fcc28ac8d5f85272597c6a4 
+        //   450aea5ebad6dc562fcc28ac8d5f85272597c6a4
+        //   exit();  
               $this->User->recursive = 0;
                 $document = $this->Auth->user();
                 $user = $this->User->find("first", array("conditions" => array(
                         "User.document" => $document,
                         "User.pass" => AuthComponent::password($this->request->data['User']['pass'])
                 )));
-                 
+
+
 
                 if (count($user) < 1) {
                     $this->Session->destroy();
@@ -318,10 +237,14 @@ class UsersController extends AppController
                     if (isset($rolAsignado['Usuariorole']['opcional'])) {
                         if ($rolAsignado['Usuariorole']['opcional'] != "" || $rolAsignado['Usuariorole']['opcional'] != null) {
                             $lider = explode(",", $rolAsignado['Usuariorole']['opcional']);
-                            $liderId = $rolAsignado['Usuariorole']['id'];
+                            $liderId = $rolAsignado['Usuariorole']['id'];   
                         }
                     }
                     if ($rolAsignado['Role']['nombre'] == "Administrador") {
+                        echo $rolAsignado['Role']['nombre'];
+                        $lider = $rolAsignado['Usuariorole']['id'];
+                    }
+                    if ($rolAsignado['Role']['nombre'] == "Comprador") {
                         echo $rolAsignado['Role']['nombre'];
                         $lider = $rolAsignado['Usuariorole']['id'];
                     }
@@ -342,8 +265,20 @@ class UsersController extends AppController
     }
 }
 
-    public function logout() {
-        return $this->redirect($this->Auth->logout());
+
+
+  public function logout() {
+        $this->Session->destroy();
+        if (isset($_SERVER['HTTP_COOKIE'])) {
+            $cookies = explode(';', $_SERVER['HTTP_COOKIE']);
+            foreach ($cookies as $cookie) {
+                $parts = explode('=', $cookie);
+                $name = trim($parts[0]);
+                setcookie($name, '', time() - 1000);
+                setcookie($name, '', time() - 1000, '/');
+            }
+        }
+        $this->redirect($this->Auth->logout());
     }
 
 }

@@ -245,7 +245,9 @@
 					<a href="#" class="btn btn-default btn-flat">Profile</a>
 					</div>
 					<div class="pull-right">
-					<a href="#" class="btn btn-default btn-flat">Sign out</a>
+				
+				<button onclick="window.location.href='<?php echo Router::url(array('controller'=>'users', 'action'=>'logout'))?>'">Cerrar sesion</button>;
+
 					</div>
 				</li>
 				</ul>

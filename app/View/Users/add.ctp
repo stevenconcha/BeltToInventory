@@ -169,6 +169,26 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 							'after' => '</div>'
 						));
 
+						echo $this->Form->input('document', array( 
+							'required' => false,
+							'class' => 'form-control',
+							'type' => 'text',
+							'label' => array('class' => 'col-sm-2 control-label'),
+							'div' => array('class' => 'form-group'),
+							'between' => '<div class="col-md-3">',
+							'after' => '</div>'
+						));
+
+						echo $this->Form->input('pass', array( 
+							'required' => false,
+							'class' => 'form-control',
+							'type' => 'text',
+							'label' => array('class' => 'col-sm-2 control-label'),
+							'div' => array('class' => 'form-group'),
+							'between' => '<div class="col-md-3">',
+							'after' => '</div>'
+						));
+
 						echo $this->Form->input('id', array('type' => 'hidden'));
 
 						echo '<div class="col-sm-offset-2 col-sm-10">';

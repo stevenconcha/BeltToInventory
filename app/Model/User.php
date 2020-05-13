@@ -100,6 +100,18 @@ class User extends AppModel
                 'message' => 'Salary must be a valid monetary amount'
             ),
         ),
+        'document' => array(
+            'document_must_not_be_blank' => array(
+                'rule' => 'notBlank',
+                'message' => 'Document is required'
+            ),
+        ),
+        'pass' => array(
+            'pass_must_not_be_blank' => array(
+                'rule' => 'notBlank',
+                'message' => 'Clave is required'
+            ),
+        ),
     );
 
 
@@ -108,7 +120,7 @@ class User extends AppModel
             $this->data['User']['pass'] = AuthComponent::password($this->data['User']['pass']);            
         }
         return true;
-    }
+}
 
     /**
      * hasMany associations

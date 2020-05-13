@@ -40,8 +40,9 @@
 				</span>
 			</a>
 			<ul class="treeview-menu">
-				<li><a href="<?php echo WEB_ROOT;?>/users/add"><i class="fa fa-circle-o"></i> Add User</a></li>
-				<li><a href="<?php echo WEB_ROOT;?>/users/index"><i class="fa fa-circle-o"></i> Manage Users</a></li>
+				<li><a href="<?php echo WEB_ROOT;?>/users/add"><i class="fa fa-circle-o"></i> Agregar Usuarios</a></li>
+				<li><a href="<?php echo WEB_ROOT;?>/users/index"><i class="fa fa-circle-o"></i> Gestionar Usuarios</a></li> 
+				<li><a href="<?php echo WEB_ROOT;?>/roles/index"><i class="fa fa-circle-o"></i> Gestionar Roles</a></li>
 			</ul>
 		</ul>
 		</section>

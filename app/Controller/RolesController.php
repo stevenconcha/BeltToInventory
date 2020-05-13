@@ -21,6 +21,7 @@ class RolesController extends AppController {
  * @return void
  */
 	public function index() {
+		$this->checkPermission(array("Administrador", "Comprador")); // agregado por steven
 		$this->Role->recursive = 0;
 		$this->set('roles', $this->Paginator->paginate());
 	}
@@ -33,6 +34,7 @@ class RolesController extends AppController {
  * @return void
  */
 	public function view($id = null) {
+	   $this->checkPermission(array("Administrador", "Comprador")); // agregado por steven
 		if (!$this->Role->exists($id)) {
 			throw new NotFoundException(__('Invalid role'));
 		}
@@ -46,6 +48,7 @@ class RolesController extends AppController {
  * @return void
  */
 	public function add() {
+		$this->checkPermission(array("Administrador")); // agregado por steven
 		if ($this->request->is('post')) {
 			$this->Role->create();
 			if ($this->Role->save($this->request->data)) {
@@ -65,6 +68,7 @@ class RolesController extends AppController {
  * @return void
  */
 	public function edit($id = null) {
+		$this->checkPermission(array("Administrador")); // agregado por steven
 		if (!$this->Role->exists($id)) {
 			throw new NotFoundException(__('Invalid role'));
 		}
@@ -89,6 +93,7 @@ class RolesController extends AppController {
  * @return void
  */
 	public function delete($id = null) {
+		$this->checkPermission(array("Administrador")); // agregado por steven
 		$this->Role->id = $id;
 		if (!$this->Role->exists()) {
 			throw new NotFoundException(__('Invalid role'));
