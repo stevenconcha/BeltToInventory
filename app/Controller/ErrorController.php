@@ -11,15 +11,15 @@ App::uses('AppController', 'Controller');
 class ErrorController extends AppController {
     
     public function invalidRol(){
-        $this->layout = 'default';
+        $this->layout = 'login';
     }
     
     public function invalidPermission(){
-        $this->layout = 'default';
+        $this->layout = 'login';
     }
     
     public function invalidAccess(){
-        $this->layout = 'default';
+        $this->layout = 'login';
     }
 
 }

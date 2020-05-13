@@ -10,7 +10,8 @@ class UsersController extends AppController
  
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('add', 'logout');
+        $this->Auth->allow('add', 'logout','recuperarPass', 'nuevaclave');
+        $this->Security->unlockedActions = array('recuperarPass');
     }
     
 
@@ -205,15 +206,19 @@ class UsersController extends AppController
                 if (count($user) < 1) {
                     $this->Session->destroy();
                     $this->Session->setFlash("Informacion de Usuario no valida");
+                    $this->Flash->error(__("Informacion de Usuario no valida"));
+
                     $this->redirect($this->Auth->logout());
                 }
 
                 if ($user['User']['status'] == 0) {
                     $this->Session->destroy();
                     $this->Session->setFlash("Informacion de Usuario no valida");
+                    $this->Flash->error(__("Informacion de Usuario no valida"));
                     $this->redirect($this->Auth->logout());
                 }  
            
+            $this->Session->write("usuarios", $user);
                 $i = 1;
                 $this->User->Usuariorole->recursive = 0;
                 $rolesAsignados = $this->User->Usuariorole->find("all", array("fields" => array(
@@ -256,10 +261,16 @@ class UsersController extends AppController
                     $this->Session->write("liderId", $liderId);
                 }
                 
-                $this->Session->write("user", $user);
+               
                 $this->Session->write("roles", $roles);
 
-                $this->redirect('/users/index');
+ 
+           
+                $this->redirect('/pages/home');
+           
+           //     $this->redirect('/roles/index');
+             
+              
         }
         $this->Session->setFlash(__('Informacion invalida, Intentar de nuevo'));
     }
@@ -279,6 +290,72 @@ class UsersController extends AppController
             }
         }
         $this->redirect($this->Auth->logout());
+    }
+
+ public function invalidRol() {
+    $this->Flash->error(__("Rol invalido para ejecutar esta operación"));
+   $this->redirect('/pages/home');
+ }
+
+ public function recuperarPass() {
+        if ($this->request->is('post')) {
+            $this->User->recursive = -1;
+            $usuario = $this->User->find('all', [
+                "conditions" => ["User.document" => $this->request->data['document']]
+            ]);
+            if (empty($usuario)) {
+                $this->Flash->error(__("No existe un usuario con el numero de documento ingresado"));
+                $this->Session->setFlash("No existe un usuario con el numero de documento ingresado");
+            } else {
+                $usuario = array_shift($usuario);
+                App::import('Vendor', 'sendMail');
+                $codigo = sendMail($usuario);
+                if ($codigo) {
+                    $this->User->id = $usuario['User']['id'];
+                    $this->User->saveField("pass", $codigo);
+                    $this->Flash->error(__("Se envió un correo electronico con los pasos para reestablecer su contraseña de ingreso"));
+                    $this->Session->setFlash("Se envió un correo electronico con los pasos para reestablecer su contraseña de ingreso");
+                } else {
+                   $this->Flash->error(__("No fue posible enviar el correo electronico. Por favor intentelo mas tarde"));
+                    $this->Session->setFlash("No fue posible enviar el correo electronico. Por favor intentelo mas tarde");
+                }
+            }
+            $this->redirect("/users/login");
+        }
+    }
+
+
+     public function nuevaclave($codigo) {
+        if ($this->request->is('post')) {
+
+            $this->User->recursive = -1;
+            $usuario = $this->User->find("all", [
+                "conditions" => ["User.pass" => AuthComponent::password($codigo)]
+            ]);
+  
+
+           
+            if (empty($usuario)) {
+                $this->Session->setFlash("codigo de verificacion no valido");
+            } else {
+                if ($this->request->data['User']['pass'] == $this->request->data['User']['confirmacion']) {
+                    $this->User->id = $usuario[0]['User']['id'];
+                    $this->User->saveField('pass', $this->request->data['User']['pass']);
+                 
+                  //  $this->User->saveField('pass', "0");
+                } else {
+                    $this->Session->setFlash("las claves ingresadas no coinsiden. por favor vuelva a intertarlo");
+                }
+            }
+            $this->redirect("/users/login");
+        }
+        $usuario = $this->User->find("all", [
+            "conditions" => ["User.pass" => $codigo]
+        ]);
+        if (empty($usuario)) {
+            $this->Session->setFlash("codigo de verificacion no valido");
+        }
+        $this->set("codigo", $codigo);
     }
 
 }

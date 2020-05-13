@@ -1,3 +1,6 @@
+<div class="box-body">
+<?php echo $this->Flash->render(); ?>
+</div>
 <div class="wrapper wrapper-content animated fadeInRight" style="background: none;">
 <div class="panel panel-success col-xs-12" style="width: 50%; left: 48%; margin-top: 10%;">
     <div class="panel-heading" style="text-align: center; font-size: 16px;">
@@ -7,7 +10,7 @@
         <div class="row">
             <div class="col-md-12" style="padding-left: 4px;">
                 <div class="col-md-7 col-xs-12" style="margin-top:35px; padding-left: 10px">
-                    <img src="<?php echo WEB_ROOT . "images/logo_saf.png" ?>" class="img-responsive" style="width: 280px; height: 125px"/>
+                    <img src="<?php echo WEB_ROOT . "images/logo_belttoInventory.png" ?>" class="img-responsive" style="width: 280px; height: 125px"/>
                 </div>
                 <div class="col-md-5">
                     <?php //echo AuthComponent::password(12345);?>

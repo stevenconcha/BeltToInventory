@@ -24,7 +24,8 @@ SET time_zone = "+00:00";
 
 -- --------------------------------------------------------
 
---
+--c:
+c
 -- Estructura de tabla para la tabla `actores`
 --
 
