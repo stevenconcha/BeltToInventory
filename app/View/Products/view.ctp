@@ -38,7 +38,7 @@
 		</dd>
 		<dt><?php echo __('Id Almacen'); ?></dt>
 		<dd>
-			<?php echo h($product['Product']['id_almacen']); ?>
+			<?php echo h($product['Store']['nombre']); ?>
 			&nbsp;
 		</dd>
 		<dt><?php echo __('Create By'); ?></dt>

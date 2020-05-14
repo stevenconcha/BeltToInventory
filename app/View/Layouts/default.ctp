@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -19,25 +20,25 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 ?>
 <!DOCTYPE html>
 <html>
-<head>
+    <head>
 	<?php echo $this->Html->charset(); ?>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- Tell the browser to be responsive to screen width -->
-	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-	<title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <!-- Tell the browser to be responsive to screen width -->
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <title>
 		<?php echo $cakeDescription ?>:
 		<?php echo $this->fetch('title'); ?>
-	</title>
+        </title>
 	<?php
 		echo $this->Html->meta('icon');
 		echo $this->fetch('css');
 		echo $this->Html->css('/bootstrap/css/bootstrap.min');
 		echo $this->Html->css('app');
 		?>
-		<!-- Font Awesome -->
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
-		<!-- Ionicons -->
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+        <!-- Ionicons -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
   <?php 
 		echo $this->Html->css('/dist/css/AdminLTE.min');
 		echo $this->Html->css('/dist/css/skins/_all-skins.min');
@@ -48,25 +49,25 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 		echo $this->Html->css('/plugins/daterangepicker/daterangepicker');
 		echo $this->Html->css('/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min');		
 	?>
-</head>
-<body class="skin-blue sidebar-mini wysihtml5-supported">
-	<div class="wrapper">
-		<!-- Top Header start -->
+    </head>
+    <body class="skin-blue sidebar-mini wysihtml5-supported" onload="hideMesaage()">
+        <div class="wrapper">
+            <!-- Top Header start -->
 		<?php echo $this->Element('header');?>
-		<!-- Top Header end -->
-		<!-- Left Sidebar start -->
+            <!-- Top Header end -->
+            <!-- Left Sidebar start -->
 		<?php echo $this->Element('left_nav'); ?> 
-		<!-- Left Sidebar end -->
-		<!-- Page content -->
-		<div class="content-wrapper" style="min-height: 916px;">
+            <!-- Left Sidebar end -->
+            <!-- Page content -->
+            <div class="content-wrapper" style="min-height: 916px;">
 			<?php echo $this->fetch('content'); ?>
-		</div>
-		<!-- Page content end -->
-		<!-- Footer start -->
+            </div>
+            <!-- Page content end -->
+            <!-- Footer start -->
 		<?php echo $this->Element('footer');?>
-		<!-- Footer end -->
-	</div>
-  <!-- Wrapper close --> 
+            <!-- Footer end -->
+        </div>
+        <!-- Wrapper close --> 
   <?php 
 	echo $this->fetch('script');
 	echo $this->Html->script('/plugins/jQuery/jquery-2.2.3.min');
@@ -88,5 +89,12 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 	echo $this->Html->script('/dist/js/pages/dashboard');		
 	echo $this->Html->script('/dist/js/demo');		
   ?>
-</body>
+    </body>
+    <script>
+        function hideMesaage() {          
+            setTimeout(function () {
+                $("#flashMessage").fadeOut(1500);
+            }, 3000);
+        }
+    </script> 
 </html>
