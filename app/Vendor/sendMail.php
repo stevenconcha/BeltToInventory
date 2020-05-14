@@ -16,7 +16,7 @@ function sendMail($infoUser) {
             . "<a href='".WEB_ROOT."/users/nuevaclave/".$codigo."'> Recuperar clave</a> ";
 //Nuestra cuenta
     $mail->Username = 'jonathan.parra.ajc@gmail.com';
-    $mail->Password = '1144189937parra'; //Su password
+    $mail->Password = ''; //Su password
 //Agregar destinatario
     $mail->Subject = "Recuperacion de contraseña";
     $mail->Body = $mensaje;
