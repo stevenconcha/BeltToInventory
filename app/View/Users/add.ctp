@@ -19,12 +19,12 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 ?>
 <section class="content-header">
       <h1>
-        Add User
+     Agregar Usuario
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="<?php echo WEB_ROOT;?>/users/index">Users</a></li>
-        <li class="active">Add User</li>
+        <li><a href="#"><i class="fa fa-dashboard"></i> Principal</a></li>
+        <li><a href="<?php echo WEB_ROOT;?>/users/index">Usuarios</a></li>
+        <li class="active"> Agregar Usuario</li>
       </ol>
 </section>
 
@@ -42,7 +42,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 						echo $this->Form->input('firstname', array(
 							'required' => false,
 							'class' => 'form-control',
-							'label' => array('class' => 'col-sm-2 control-label'),
+							'label' =>  array('text'=> 'Nombres','class' => 'col-sm-2 control-label'),
 							'div' => array('class' => 'form-group'),
 							'between' => '<div class="col-md-3">',
 							'after' => '</div>'
@@ -50,7 +50,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 						echo $this->Form->input('lastname', array(
 							'required' => false,
 							'class' => 'form-control',
-							'label' => array('class' => 'col-sm-2 control-label'),
+							'label' => array('text'=> 'Apellidos','class' => 'col-sm-2 control-label'),
 							'div' => array('class' => 'form-group'),
 							'between' => '<div class="col-md-3">',
 							'after' => '</div>'
@@ -58,30 +58,21 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 						echo $this->Form->input('email', array(
 							'required' => false,
 							'class' => 'form-control',
-							'label' => array('class' => 'col-sm-2 control-label'),
+							'label' => array('text'=> 'Email','class' => 'col-sm-2 control-label'),
 							'div' => array('class' => 'form-group'),
 							'between' => '<div class="col-md-3">',
 							'after' => '</div>'
 						));
-						echo $this->Form->input('dob', array(
-							'required' => false,
-							'class' => 'form-control datepicker',
-							'id' => 'dob',
-							'type' => 'text',
-							'label' => array('class' => 'col-sm-2 control-label'),
-							'div' => array('class' => 'form-group'),
-							'between' => '<div class="col-md-3">',
-							'after' => '</div>'
-						));
+						
 
-						$options = array('male' => 'Male', 'female' => 'Female');
+						$options = array('male' => 'Hombre', 'female' => 'Mujer');
 						$attributes = array(
 							'legend' => false,
 							'required' => false,
 						);
 
 						echo '<div class="form-group">
-							<label class="col-sm-2 control-label">Gender</label>
+							<label class="col-sm-2 control-label">Genero</label>
 							<div class="col-md-3">';
 						echo $this->Form->radio('gender', $options, $attributes, array(
 							'class' => 'radio-inline',
@@ -99,7 +90,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 						echo $this->Form->input('address', array(
 							'required' => false,
 							'class' => 'form-control',
-							'label' => array('class' => 'col-sm-2 control-label'),
+							'label' => array('text'=> 'Dirección','class' => 'col-sm-2 control-label'),
 							'div' => array('class' => 'form-group'),
 							'between' => '<div class="col-md-3">',
 							'after' => '</div>'
@@ -113,13 +104,13 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 							'label' => false,
 							'options' => $options,
 							'class' => 'form-control',
-							'label' => array('class' => 'col-sm-2 control-label'),
+							'label' => array('text'=> 'Pais','class' => 'col-sm-2 control-label'),
 							'div' => array('class' => 'form-group'),
 							'between' => '<div class="col-md-3">',
 							'after' => '</div>'
 						));
 
-						$options = array('' => '--Select one--');
+						$options = array('' => '--Seleccione un Estado --');
 						echo $this->Form->input('state', array(
 							'required' => false,
 							'type' => 'select',
@@ -128,13 +119,13 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 							'options' => $options,
 							'onChange' => 'getCity(this.value)',
 							'class' => 'form-control',
-							'label' => array('class' => 'col-sm-2 control-label'),
+							'label' => array('text'=> 'Estado','class' => 'col-sm-2 control-label'),
 							'div' => array('class' => 'form-group'),
 							'between' => '<div class="col-md-3">',
 							'after' => '</div>'
 						));
 
-						$options = array('' => '--Select one--');
+						$options = array('' => '--Seleccione una Ciudad--');
 						echo $this->Form->input('city' ,array(
 							'required' => false,
 							'type' => 'select',
@@ -142,38 +133,19 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 							'options' => $options,
 							'id' => 'cities',
 							'class' => 'form-control',
-							'label' => array('class' => 'col-sm-2 control-label'),
+							'label' => array('text'=> 'Ciudad','class' => 'col-sm-2 control-label'),
 							'div' => array('class' => 'form-group'),
 							'between' => '<div class="col-md-3">',
 							'after' => '</div>'
 						));
 
-						echo $this->Form->input('doj', array(
-							'required' => false,
-							'class' => 'form-control datepicker',
-							'id' => 'doj',
-							'type' => 'text',
-							'label' => array('class' => 'col-sm-2 control-label'),
-							'div' => array('class' => 'form-group'),
-							'between' => '<div class="col-md-3">',
-							'after' => '</div>'
-						));
-
-						echo $this->Form->input('salary', array(
-							'required' => false,
-							'class' => 'form-control',
-							'type' => 'text',
-							'label' => array('class' => 'col-sm-2 control-label'),
-							'div' => array('class' => 'form-group'),
-							'between' => '<div class="col-md-3">',
-							'after' => '</div>'
-						));
+					
 
 						echo $this->Form->input('document', array( 
 							'required' => false,
 							'class' => 'form-control',
 							'type' => 'text',
-							'label' => array('class' => 'col-sm-2 control-label'),
+							'label' => array('text'=> 'Documento','class' => 'col-sm-2 control-label'),
 							'div' => array('class' => 'form-group'),
 							'between' => '<div class="col-md-3">',
 							'after' => '</div>'
@@ -183,7 +155,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 							'required' => false,
 							'class' => 'form-control',
 							'type' => 'text',
-							'label' => array('class' => 'col-sm-2 control-label'),
+							'label' => array('text'=> 'Clave','class' => 'col-sm-2 control-label'),
 							'div' => array('class' => 'form-group'),
 							'between' => '<div class="col-md-3">',
 							'after' => '</div>'
@@ -194,12 +166,14 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 						echo '<div class="col-sm-offset-2 col-sm-10">';
 						echo $this->Form->submit('submit', array(
 							'div' => false,
+							'label'=> 'Aceptar',
 							'class' => 'btn btn-sm btn-primary mar_right5'
 						));
 
 						echo $this->Form->button('Cancel', array(
 							'type'=>'button',
 							'class' => 'btn btn-sm btn-danger',
+							'label'=> 'Cancelar',
 							'div' => false,
 							'onclick' => 'cancelFrm();'
 						));
@@ -239,7 +213,7 @@ function getStates(id)
 			type: "get",
 			dataType: "json",
 			success: function(response) {
-				var html = '<option value="">--Select one--</option>';
+				var html = '<option value="">--Seleccione el estado--</option>';
 				$.each(response, function(key, index){
 					html +='<option value="'+key+'">'+index+'</option>';
 				});
@@ -247,7 +221,7 @@ function getStates(id)
 			}
 		});
 	} else {
-		alert("Please select country");
+		alert("favor seleccione la ciudad");
 	}
 }
 
@@ -259,7 +233,7 @@ function getCity(id)
 			type: "get",
 			dataType: "json",
 			success: function(response) {
-				var html = '<option value="">--Select one--</option>';
+				var html = '<option value="">--Seleccione una ciudad--</option>';
 				$.each(response, function(key, index){
 					html +='<option value="'+key+'">'+index+'</option>';					
 				});
@@ -267,7 +241,7 @@ function getCity(id)
 			}
 		});
 	} else {
-		alert("Please select state");
+		alert("Favor seleccione la ciudad");
 	}
 }
 

@@ -205,16 +205,19 @@ class UsersController extends AppController
 
                 if (count($user) < 1) {
                     $this->Session->destroy();
-                    $this->Session->setFlash("Informacion de Usuario no valida");
-                    $this->Flash->error(__("Informacion de Usuario no valida"));
+                    //$this->Session->setFlash("Informacion de Usuario no valida");
+                    $this->Flash->error(__("Informacion de Usuario no valida."));
+                //    $this->Flash->success(__("User has been saved successfully"));
 
                     $this->redirect($this->Auth->logout());
                 }
 
                 if ($user['User']['status'] == 0) {
                     $this->Session->destroy();
-                    $this->Session->setFlash("Informacion de Usuario no valida");
-                    $this->Flash->error(__("Informacion de Usuario no valida"));
+                    //$this->Session->setFlash("Informacion de Usuario no valida");
+                    $this->Flash->error(__("Informacion de Usuario no valida,"));
+                  //                      $this->Flash->success(__("User has been saved successfully"));
+
                     $this->redirect($this->Auth->logout());
                 }  
            

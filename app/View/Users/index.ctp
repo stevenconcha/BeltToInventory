@@ -1,20 +1,7 @@
 <?php
-/**
- * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
- * Redistributions of files must retain the above copyright notice.
- *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
- * @package       app.View.Layouts
- * @since         CakePHP(tm) v 0.10.0.1076
- * @license       http://www.opensource.org/licenses/mit-license.php MIT License
- */
 
-$cakeDescription = __d('cake_dev', 'Manage Users');
+
+$cakeDescription = __d('cake_dev', 'Gestionar Usuarios');
 $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version());
 $paginator = $this->Paginator;
 ?>
@@ -23,12 +10,12 @@ $paginator = $this->Paginator;
 
 <section class="content-header">
       <h1>
-        Manage Users
+       Gestionar Usuarios.
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Users</a></li>
-        <li class="active">Manage Users</li>
+        <li><a href="#"><i class="fa fa-dashboard"></i> Principal</a></li>
+        <li><a href="#">Usuarios</a></li>
+        <li class="active">Gestionar Usuarios</li>
       </ol>
 </section>
 
@@ -54,12 +41,11 @@ $paginator = $this->Paginator;
 						<table class="table table-striped">
 							<thead>
 								<tr>
-									<th> <?php echo $paginator->sort('id', 'Sno');?> </th>
-									<th> <?php echo $paginator->sort('firstname', 'Firstname');?> </th>
-									<th> <?php echo $paginator->sort('lastname', 'Lastname');?> </th>
+									<th> <?php echo $paginator->sort('sno', 'id');?> </th>
+									<th> <?php echo $paginator->sort('fistname', 'Nombres');?> </th>
+									<th> <?php echo $paginator->sort('lastname', 'Apellidos');?> </th>
 									<th> <?php echo $paginator->sort('email', 'Email');?> </th>
-									<th> <?php echo $paginator->sort('dob', 'Date of birth');?> </th>
-									<th> <?php echo $paginator->sort('doj', 'Date of joining');?> </th>
+						
 									<th>Action</th>
 								</tr>
 							</thead>
@@ -73,8 +59,6 @@ $paginator = $this->Paginator;
 								<td><?php echo $user['User']['firstname'];?></td>
 								<td><?php echo $user['User']['lastname'];?></td>
 								<td><?php echo $user['User']['email'];?></td>
-								<td><?php echo $user['User']['dob'];?></td>
-								<td><?php echo $user['User']['doj'];?></td>
 								<td>
 									<?php 
 									echo $this->Html->link(
@@ -82,7 +66,7 @@ $paginator = $this->Paginator;
 										array('controller' => 'Users', 'action' => 'view/'.$user_id), 
 										array(
 										'class'=>'btn btn-sm btn-primary mar_right5',
-										'title' => 'View user',
+										'title' => 'Ver Usuario',
 										'escape' => false), 
 									false);
 
@@ -91,7 +75,7 @@ $paginator = $this->Paginator;
 										array('controller' => 'Users', 'action' => 'edit/'.$user_id), 
 										array(
 										'class'=>'btn btn-sm btn-success mar_right5',
-										'title' => 'Edit user',
+										'title' => 'Editar Usuario',
 										'escape' => false), 
 									false);
 
@@ -101,7 +85,7 @@ $paginator = $this->Paginator;
 										'#', 
 										array(
 										'class'=>'btn btn-sm btn-danger btn-confirm ',
-										'title' => 'Delete user',
+										'title' => 'Eliminar usuario',
 										'onclick' => 'deleteModal('.$user_id.')',
 										'escape' => false), 
 									false);
@@ -138,11 +122,11 @@ $paginator = $this->Paginator;
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-body" id="confirmMessage">
-				Are you sure want to delete this record?
+				Esta seguro de eliminar esta fila?.
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-sm btn-primary" id="confirmOk">Ok</button>
-				<button type="button" class="btn btn-sm btn-danger" id="confirmCancel">Cancel</button>
+				<button type="button" class="btn btn-sm btn-primary" id="confirmOk">Si</button>
+				<button type="button" class="btn btn-sm btn-danger" id="confirmCancel">Cancelar</button>
 			</div>
 		</div>
 	</div>

@@ -42,14 +42,14 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 						echo $this->Form->input('firstname', array(
 						'required' => false,
 						'class' => 'form-control',
-						'label' => array('class' => 'col-sm-2 control-label'),
+						'label' => array('text'=> 'Nombres','class' => 'col-sm-2 control-label'),
 						'div' => array('class' => 'form-group'),
 						'between' => '<div class="col-md-3">',
 						'after' => '</div>'
 						));
 						echo $this->Form->input('lastname', array(
 						'class' => 'form-control',
-						'label' => array('class' => 'col-sm-2 control-label'),
+						'label' => array('text'=> 'Apellidos','class' => 'col-sm-2 control-label'),
 						'div' => array('class' => 'form-group'),
 						'between' => '<div class="col-md-3">',
 						'after' => '</div>'
@@ -61,22 +61,14 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 						'between' => '<div class="col-md-3">',
 						'after' => '</div>'
 						));
-						echo $this->Form->input('dob', array(
-						'class' => 'form-control datepicker',
-						'type' => 'text',
-						'id' => 'dob',
-						'label' => array('class' => 'col-sm-2 control-label'),
-						'div' => array('class' => 'form-group'),
-						'between' => '<div class="col-md-3">',
-						'after' => '</div>'
-						));
+					
 
-						$options = array('male' => 'Male', 'female' => 'Female');
+						$options = array('male' => 'Masculino', 'female' => 'Femenino');
 						$attributes = array(
 							'legend' => false    
 						);
 						echo '<div class="form-group">
-							<label class="col-sm-2 control-label">Gender</label>
+							<label class="col-sm-2 control-label">Genero</label>
 							<div class="col-md-3">';
 						echo $this->Form->radio('gender', $options, $attributes, array(
 							'class' => 'radio-inline',
@@ -93,7 +85,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 
 						echo $this->Form->input('address', array(
 						'class' => 'form-control',
-						'label' => array('class' => 'col-sm-2 control-label'),
+						'label' => array('text'=> 'Dirección','class' => 'col-sm-2 control-label'),
 						'div' => array('class' => 'form-group'),
 						'between' => '<div class="col-md-3">',
 						'after' => '</div>'
@@ -106,7 +98,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 							'label' => false,
 							'options' => $countries,
 							'class' => 'form-control',
-							'label' => array('class' => 'col-sm-2 control-label'),
+							'label' => array('text'=> 'Pais','class' => 'col-sm-2 control-label'),
 							'div' => array('class' => 'form-group'),
 							'between' => '<div class="col-md-3">',
 							'after' => '</div>'
@@ -120,7 +112,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 							'options' => $states,
 							'onChange' => 'getCity(this.value)',
 							'class' => 'form-control',
-							'label' => array('class' => 'col-sm-2 control-label'),
+							'label' => array('text'=> 'Estado','class' => 'col-sm-2 control-label'),
 							'div' => array('class' => 'form-group'),
 							'between' => '<div class="col-md-3">',
 							'after' => '</div>'
@@ -133,28 +125,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 							'options' => $cities,
 							'id' => 'cities',
 							'class' => 'form-control',
-							'label' => array('class' => 'col-sm-2 control-label'),
-							'div' => array('class' => 'form-group'),
-							'between' => '<div class="col-md-3">',
-							'after' => '</div>'
-						));
-
-						echo $this->Form->input('doj', array(
-							'required' => false,
-							'class' => 'form-control datepciker',
-							'type' => 'text',
-							'id' => 'doj',
-							'label' => array('class' => 'col-sm-2 control-label'),
-							'div' => array('class' => 'form-group'),
-							'between' => '<div class="col-md-3">',
-							'after' => '</div>'
-						));
-
-						echo $this->Form->input('salary', array(
-							'required' => false,
-							'class' => 'form-control',
-							'type' => 'text',
-							'label' => array('class' => 'col-sm-2 control-label'),
+							'label' => array('text'=> 'Ciudad','class' => 'col-sm-2 control-label'),
 							'div' => array('class' => 'form-group'),
 							'between' => '<div class="col-md-3">',
 							'after' => '</div>'
