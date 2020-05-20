@@ -20,24 +20,12 @@ class RolesController extends AppController {
  *
  * @return void
  */
-/*
 	public function index() {
 		$this->checkPermission(array("Administrador", "Comprador")); // agregado por steven
 		$this->Role->recursive = 0;
 		$this->set('roles', $this->Paginator->paginate());
 	}
-*/
 
- public function index()
-    {
-        $this->checkPermission(array("Administrador", "Comprador"));
-        $this->paginate = array(
-            'limit' => 3,
-            'order' => array('id' => 'desc')
-        );
-        $roles = $this->paginate('Role');
-        $this->set('roles', $roles);
-    }
 /**
  * view method
  *

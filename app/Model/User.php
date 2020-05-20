@@ -9,43 +9,43 @@ class User extends AppModel
         'firstname' => array(
             'firstname_must_not_be_blank' => array(
                 'rule' => 'notBlank',
-                'message' => 'El campo Nombres es requerido'
+                'message' => 'First name is required'
             ),
             'firstname_must_be_alphabet' => array(
                 'rule' =>  array('custom', '/^[a-zA-Z]*$/i'),
-                'message' => 'El campo Nombres debe ser alfabetico'
+                'message' => 'First name must be alphabet only'
             ),
             'firstname_must_be_max' => array(
                 'rule' =>  array('maxLength', 32),
-                'message' => 'El campo Nombres debe tener una longitud maxima de 32 caracteres.'
+                'message' => 'First name must be 32 length'
             )
         ),
         'lastname' => array(
             'lastname_must_not_be_blank' => array(
                 'rule' => 'notBlank',
-                'message' => 'El campo Apellidos es requerido'
+                'message' => 'Last name is required'
             ),
             'lastname_must_be_alphabet' => array(
                 'rule' =>  array('custom', '/^[a-zA-Z]*$/i'),
-                'message' => 'El campo Apellidos debe ser alfanumerico '
+                'message' => 'Last name must be alphabet only'
             ),
             'lastname_must_be_max' => array(
                 'rule' =>  array('maxLength', 32),
-                'message' => 'El campo Apellidos debe tener una longitud maxima de 32 caracteres.'
+                'message' => 'Last name must be 32 length'
             )
         ),
         'email' => array(
             'required' => array(
                 'rule' => array('email'),
-                'message' => 'El campo Email es requerido'
+                'message' => 'Email is required'
             ),
             'maxLength' => array(
                 'rule' => array('maxLength', 255),
-                'message' => 'El campo Apellidos debe tener una longitud maxima de 255 caracteres.'
+                'message' => 'Email cannot be more than 255 characters.'
             ),
             'unique' => array(
                 'rule' => 'isUnique',
-                'message' => 'El email ya se encuentra registrado en la plataforma.'
+                'message' => 'Email is already exists.'
             )
         ),
         'dob' => array(
@@ -57,31 +57,31 @@ class User extends AppModel
         'gender' => array(
             'gender_must_not_be_blank' => array(
                 'rule' => 'notBlank',
-                'message' => 'El campo Genero es requerido'
+                'message' => 'Gender is required'
             )
         ),
         'address' => array(
             'address_must_not_be_blank' => array(
                 'rule' => 'notBlank',
-                'message' => 'El campo Dirección es requerido'
+                'message' => 'Address is required'
             )
         ),
         'country' => array(
             'country_must_not_be_blank' => array(
                 'rule' => 'notBlank',
-                'message' => 'El campo Pais es requerido'
+                'message' => 'Country is required'
             )
         ),
         'state' => array(
             'state_must_not_be_blank' => array(
                 'rule' => 'notBlank',
-                'message' => 'El campo Estado es requerido'
+                'message' => 'State is required'
             )
         ),
         'city' => array(
             'city_must_not_be_blank' => array(
                 'rule' => 'notBlank',
-                'message' => 'El campo Ciudad es requerido'
+                'message' => 'City is required'
             )
         ),
         'doj' => array(
@@ -103,13 +103,13 @@ class User extends AppModel
         'document' => array(
             'document_must_not_be_blank' => array(
                 'rule' => 'notBlank',
-                'message' => 'El campo Documento es requerido'
+                'message' => 'Document is required'
             ),
         ),
         'pass' => array(
             'pass_must_not_be_blank' => array(
                 'rule' => 'notBlank',
-                'message' => 'El campo Clave es requerido'
+                'message' => 'Clave is required'
             ),
         ),
     );
