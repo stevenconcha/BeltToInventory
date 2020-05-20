@@ -13,6 +13,7 @@ class ProductFixture extends CakeTestFixture {
 		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'unsigned' => false, 'key' => 'primary'),
 		'codigo' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 20, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'nombre_prod' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 50, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'modelo' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 50, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'talla' => array('type' => 'integer', 'null' => true, 'default' => null, 'unsigned' => false),
 		'stock' => array('type' => 'integer', 'null' => true, 'default' => null, 'unsigned' => false),
 		'v_unitario' => array('type' => 'integer', 'null' => true, 'default' => null, 'unsigned' => false),
@@ -39,15 +40,16 @@ class ProductFixture extends CakeTestFixture {
 			'id' => 1,
 			'codigo' => 'Lorem ipsum dolor ',
 			'nombre_prod' => 'Lorem ipsum dolor sit amet',
+			'modelo' => 'Lorem ipsum dolor sit amet',
 			'talla' => 1,
 			'stock' => 1,
 			'v_unitario' => 1,
 			'iva' => 1,
 			'id_almacen' => 1,
 			'create_by' => 1,
-			'create_at' => '2020-05-14 02:27:44',
+			'create_at' => '2020-05-14 16:03:10',
 			'update_by' => 1,
-			'update_at' => '2020-05-14 02:27:44'
+			'update_at' => '2020-05-14 16:03:10'
 		),
 	);
 
