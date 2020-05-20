@@ -19,6 +19,7 @@ $paginator = $this->Paginator;
 </section>
 
 
+
 <section class="content">
     <div class="row">
         <div class="col-sm-12">

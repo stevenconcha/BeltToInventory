@@ -43,4 +43,4 @@
  */
 	require CAKE . 'Config' . DS . 'routes.php';
 
-define('WEB_ROOT', 'http://localhost:9191/IngSoftware/BelttoInventory_ing'); 
+define('WEB_ROOT', 'http://localhost/BelttoInventory'); 
