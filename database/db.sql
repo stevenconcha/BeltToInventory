@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 12-05-2020 a las 19:40:47
+-- Tiempo de generación: 20-05-2020 a las 09:02:50
 -- Versión del servidor: 10.1.32-MariaDB
 -- Versión de PHP: 7.3.10
 
@@ -24,8 +24,7 @@ SET time_zone = "+00:00";
 
 -- --------------------------------------------------------
 
---c:
-c
+--
 -- Estructura de tabla para la tabla `actores`
 --
 
@@ -101,9 +100,9 @@ CREATE TABLE `cities` (
 --
 
 INSERT INTO `cities` (`id`, `country_id`, `state_id`, `city_name`, `created`, `modified`) VALUES
-(1, 1, 1, 'Chennai', '2017-05-19 10:04:59', '2017-05-19 10:04:59'),
-(2, 1, 1, 'Coimbatore', '2017-05-19 10:04:59', '2017-05-19 10:04:59'),
-(3, 1, 1, 'Madurai', '2017-05-19 10:05:21', '2017-05-19 10:05:21');
+(1, 1, 1, 'Cali', '2017-05-19 10:04:59', '2017-05-19 10:04:59'),
+(2, 1, 1, 'Palmira', '2017-05-19 10:04:59', '2017-05-19 10:04:59'),
+(3, 2, 3, 'Los angeles', '2017-05-19 10:05:21', '2017-05-19 10:05:21');
 
 -- --------------------------------------------------------
 
@@ -124,7 +123,7 @@ CREATE TABLE `countries` (
 --
 
 INSERT INTO `countries` (`id`, `country_name`, `country_code`, `created`, `modified`) VALUES
-(1, 'India', 'IND', '2017-05-19 09:57:22', '2017-05-19 09:57:22'),
+(1, 'Colombia', 'CO', '2017-05-19 09:57:22', '2017-05-19 09:57:22'),
 (2, 'United states', 'US', '2017-05-19 09:57:22', '2017-05-19 09:57:22');
 
 -- --------------------------------------------------------
@@ -154,6 +153,34 @@ INSERT INTO `peliculas` (`id`, `titulo`, `resumen`, `codigo_categoria`, `minutos
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `products`
+--
+
+CREATE TABLE `products` (
+  `id` int(11) NOT NULL,
+  `codigo` varchar(20) DEFAULT NULL,
+  `nombre_prod` varchar(50) DEFAULT NULL,
+  `talla` int(11) DEFAULT NULL,
+  `stock` int(11) DEFAULT NULL,
+  `v_unitario` int(11) DEFAULT NULL,
+  `iva` int(11) DEFAULT NULL,
+  `id_almacen` int(11) DEFAULT NULL,
+  `create_by` int(11) NOT NULL,
+  `create_at` datetime NOT NULL,
+  `update_by` int(11) DEFAULT NULL,
+  `update_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `products`
+--
+
+INSERT INTO `products` (`id`, `codigo`, `nombre_prod`, `talla`, `stock`, `v_unitario`, `iva`, `id_almacen`, `create_by`, `create_at`, `update_by`, `update_at`) VALUES
+(1, 'PR01', 'FAJA', 36, 25, 50000, 19, 1, 1, '2020-05-12 21:55:00', NULL, '2020-05-12 21:55:00');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `roles`
 --
 
@@ -170,7 +197,10 @@ CREATE TABLE `roles` (
 INSERT INTO `roles` (`id`, `nombre`, `descripcion`) VALUES
 (1, 'Administrador', 'Administrador del Sistema'),
 (2, 'Vendedor', 'Vendedor'),
-(3, 'Comprador', 'Comprador del Sistema Belt');
+(3, 'Comprador', 'Comprador del Sistema Belt'),
+(4, 'pruebamaria', 'maria'),
+(5, 'pruebamaria', 'maria'),
+(6, 'vendedor', 'vendedor');
 
 -- --------------------------------------------------------
 
@@ -191,8 +221,28 @@ CREATE TABLE `states` (
 --
 
 INSERT INTO `states` (`id`, `country_id`, `state_name`, `created`, `modified`) VALUES
-(1, 1, 'Tamil Nadu', '2017-05-19 10:01:39', '2017-05-19 10:01:39'),
-(2, 1, 'Kerala', '2017-05-19 10:01:39', '2017-05-19 10:01:39');
+(1, 1, 'Valle del Cauca', '2017-05-19 10:01:39', '2017-05-19 10:01:39'),
+(3, 2, 'California', '2020-05-18 21:56:34', '2020-05-18 21:56:34');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `stores`
+--
+
+CREATE TABLE `stores` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(200) DEFAULT NULL,
+  `direccion` varchar(100) DEFAULT NULL,
+  `telefono` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `stores`
+--
+
+INSERT INTO `stores` (`id`, `nombre`, `direccion`, `telefono`) VALUES
+(1, 'Prueba', 'asfdasdf', '123465');
 
 -- --------------------------------------------------------
 
@@ -225,7 +275,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `document`, `firstname`, `lastname`, `pass`, `email`, `gender`, `dob`, `address`, `country`, `state`, `city`, `doj`, `salary`, `status`, `created`, `modified`) VALUES
-(1, 1144189937, 'suresh', 's', 'a4db58d1814063fc35447a2f8b01e6353432aefe', 'test@gmaial.com', 'male', '1989-05-08', '1234 five streetasd', '1', '1', '2', '2017-05-22', 40000.99, 1, '2017-05-18 19:39:46', '2020-05-10 02:24:35'),
+(1, 1144189937, 'Jonathan ', 'Parra', 'a4db58d1814063fc35447a2f8b01e6353432aefe', 'test@gmaial.com', 'male', '1989-05-08', '1234 five streetasd', '1', '1', '2', '2017-05-22', 40000.99, 1, '2017-05-18 19:39:46', '2020-05-10 02:24:35'),
 (2, 0, 'test', '1', '0', 'test1@gmail.com', 'male', '1989-07-05', '123 four street', '1', '1', '3', '2017-06-20', 39999.99, 1, '2017-05-18 19:47:34', '2017-05-18 19:47:34'),
 (3, 0, 'test', '2', '0', 'test2@gmail.com', 'male', '1989-05-09', 'tyetaserf', '1', '1', '1', '2017-05-09', 29999.99, 1, '2017-05-18 18:23:14', '2017-05-18 18:23:14'),
 (4, 0, 'test', '2', '0', 'test2@gmail.com', 'male', '1989-05-09', 'tyetaserf', '1', '1', '1', '2017-05-09', 41999.99, 1, '2017-05-18 18:23:39', '2017-05-18 18:23:39'),
@@ -233,8 +283,10 @@ INSERT INTO `users` (`id`, `document`, `firstname`, `lastname`, `pass`, `email`,
 (6, 0, 'first', 'last', '0', 'first@gmail.com', 'female', '1998-10-05', 'test', '1', '1', '1', '2017-05-21', 25000.56, 0, '2017-05-21 11:26:48', '2020-05-10 04:57:20'),
 (7, 0, 'asd', 'asd', '0', '123@hotmail.com', 'female', '0000-00-00', '123', '1', '1', '2', '2000-01-23', 123.00, 1, '2020-05-10 02:23:36', '2020-05-10 02:24:15'),
 (8, 0, 'asfd', 'dcxfv', '0', 'wq@hotmail.com', 'male', '0000-00-00', 'sz<asdasd', '1', '1', '1', '0000-00-00', 231231216.00, 1, '2020-05-10 04:46:59', '2020-05-10 04:46:59'),
-(9, 0, 'asd', 'asd', '', 'asd@hotmail.com', 'male', '0000-00-00', 'asdasd', '1', '1', '1', '0000-00-00', 212121.00, 1, '2020-05-11 06:19:02', '2020-05-11 06:19:02'),
-(11, 123456789, 'asd', 'asd', '450aea5ebad6dc562fcc28ac8d5f85272597c6a4', 'steven@hotmail.com', 'male', '0000-00-00', 'zxczxc', '1', '1', '1', '0000-00-00', 4001111.00, 1, '2020-05-13 03:52:04', '2020-05-13 03:52:04');
+(9, 0, 'asdeditado', 'asd', '', 'asd@hotmail.com', 'male', '0000-00-00', 'asdasd', '1', '1', '1', '0000-00-00', 212121.00, 1, '2020-05-11 06:19:02', '2020-05-14 22:10:10'),
+(11, 123456789, 'asd', 'asd', '450aea5ebad6dc562fcc28ac8d5f85272597c6a4', 'jonathan.parra.ajc@gmail.com', 'male', '0000-00-00', 'zxczxc', '1', '1', '1', '0000-00-00', 4001111.00, 1, '2020-05-13 03:52:04', '2020-05-14 02:09:17'),
+(12, 0, 'maria', 'elsy', '84c4e34586bba659247425fe1a668fdd2ff19761', 'lucuara@hotmail.com', 'male', '0000-00-00', 'sddsa', '1', '1', '1', '0000-00-00', 10.00, 1, '2020-05-14 18:51:55', '2020-05-14 18:51:55'),
+(13, 0, 'sss', 'sss', '974a75d3625f2d5753b58615e169700aed6a26c1', 'ss@hotmail.com', 'male', '0000-00-00', 'ss', '1', '1', '1', '0000-00-00', 100.00, 0, '2020-05-14 22:22:02', '2020-05-14 22:36:21');
 
 -- --------------------------------------------------------
 
@@ -296,6 +348,13 @@ ALTER TABLE `peliculas`
   ADD KEY `identificacion_actor` (`identificacion_actor`);
 
 --
+-- Indices de la tabla `products`
+--
+ALTER TABLE `products`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_almacen` (`id_almacen`);
+
+--
 -- Indices de la tabla `roles`
 --
 ALTER TABLE `roles`
@@ -305,6 +364,12 @@ ALTER TABLE `roles`
 -- Indices de la tabla `states`
 --
 ALTER TABLE `states`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `stores`
+--
+ALTER TABLE `stores`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -346,22 +411,34 @@ ALTER TABLE `peliculas`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
+-- AUTO_INCREMENT de la tabla `products`
+--
+ALTER TABLE `products`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT de la tabla `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `states`
 --
 ALTER TABLE `states`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT de la tabla `stores`
+--
+ALTER TABLE `stores`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarioroles`
@@ -379,6 +456,12 @@ ALTER TABLE `usuarioroles`
 ALTER TABLE `peliculas`
   ADD CONSTRAINT `peliculas_ibfk_1` FOREIGN KEY (`codigo_categoria`) REFERENCES `categoris` (`id`),
   ADD CONSTRAINT `peliculas_ibfk_2` FOREIGN KEY (`identificacion_actor`) REFERENCES `actores` (`identificacion`);
+
+--
+-- Filtros para la tabla `products`
+--
+ALTER TABLE `products`
+  ADD CONSTRAINT `id_almacen` FOREIGN KEY (`id_almacen`) REFERENCES `stores` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `usuarioroles`
