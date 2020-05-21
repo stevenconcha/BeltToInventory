@@ -59,7 +59,7 @@ class AppController extends Controller {
         'Session',
         'Auth' => array(
             "loginRedirect" => array("controller" => "pages", "action" => "display"),
-            "logoutRedirect" => array("controller" => "pages", "action" => "display"),
+            "logoutRedirect" => array("controller" => "pages", "action" => "login"),
             'loginAction' => array(
                 'controller' => 'users',
                 'action' => 'login'
@@ -82,7 +82,7 @@ class AppController extends Controller {
             if($keys == "All" && count($roles) > 0){
                 return;
             }else{
-                $this->redirect(array("controller" => "error", "action" => "invalidRol"));
+                $this->redirect(array("controller" => "users", "action" => "invalidRol"));
             }
         }
         for ($i = 0; $i < count($keys); $i++) {
@@ -92,7 +92,7 @@ class AppController extends Controller {
                 }
             }
         }
-        $this->redirect(array("controller" => "error", "action" => "invalidRol"));
+        $this->redirect(array("controller" => "users", "action" => "invalidRol"));
     }
 	
     public function beforeFilter() {

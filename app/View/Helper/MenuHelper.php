@@ -13,7 +13,7 @@ class MenuHelper extends AppHelper {
             exit();
             $html = '
              <li>' . $this->Html->link('<i class="fa fa-circle-o"></i> Agregar Usuario', '/users/add') . '</li>
-              <li>' . $this->Html->link('<i class="fa fa-circle-o"></i> Gestionar Usuarios', '/users/add') . '</li>
+             <li>' . $this->Html->link('<i class="fa fa-circle-o"></i> Gestionar Usuarios', '/users/add') . '</li>
             ';
         }else{
             $html = "";

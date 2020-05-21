@@ -13,18 +13,33 @@ class RolesController extends AppController {
  *
  * @var array
  */
-	public $components = array('Paginator');
+	public $components = array('Paginator', 'Flash');
+	public $helpers = array('Html', 'Form', 'Flash');
+  
 
 /**
  * index method
  *
  * @return void
  */
+/*
 	public function index() {
+		$this->checkPermission(array("Administrador", "Comprador")); // agregado por steven
 		$this->Role->recursive = 0;
 		$this->set('roles', $this->Paginator->paginate());
 	}
+*/
 
+ public function index()
+    {
+        $this->checkPermission(array("Administrador", "Comprador"));
+        $this->paginate = array(
+            'limit' => 3,
+            'order' => array('id' => 'desc')
+        );
+        $roles = $this->paginate('Role');
+        $this->set('roles', $roles);
+    }
 /**
  * view method
  *
@@ -33,8 +48,9 @@ class RolesController extends AppController {
  * @return void
  */
 	public function view($id = null) {
+	   $this->checkPermission(array("Administrador", "Comprador")); // agregado por steven
 		if (!$this->Role->exists($id)) {
-			throw new NotFoundException(__('Invalid role'));
+			throw new NotFoundException(__('Rol invalido'));
 		}
 		$options = array('conditions' => array('Role.' . $this->Role->primaryKey => $id));
 		$this->set('role', $this->Role->find('first', $options));
@@ -46,13 +62,14 @@ class RolesController extends AppController {
  * @return void
  */
 	public function add() {
+		$this->checkPermission(array("Administrador")); // agregado por steven
 		if ($this->request->is('post')) {
 			$this->Role->create();
 			if ($this->Role->save($this->request->data)) {
-				$this->Flash->success(__('The role has been saved.'));
+				$this->Flash->success(__('El rol ha sido guardado satisfactoriamente'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Flash->error(__('The role could not be saved. Please, try again.'));
+				$this->Flash->error(__('El rol no se ha podido registrar sactisfactoriamente.'));
 			}
 		}
 	}
@@ -65,6 +82,7 @@ class RolesController extends AppController {
  * @return void
  */
 	public function edit($id = null) {
+		$this->checkPermission(array("Administrador")); // agregado por steven
 		if (!$this->Role->exists($id)) {
 			throw new NotFoundException(__('Invalid role'));
 		}
@@ -73,7 +91,7 @@ class RolesController extends AppController {
 			//	$this->Flash->success(__('The role has been saved.'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Flash->error(__('The role could not be saved. Please, try again.'));
+				$this->Flash->error(__('El rol no se ha podido editar correctamente.'));
 			}
 		} else {
 			$options = array('conditions' => array('Role.' . $this->Role->primaryKey => $id));
@@ -81,24 +99,28 @@ class RolesController extends AppController {
 		}
 	}
 
-/**
+
+	/**
  * delete method
  *
  * @throws NotFoundException
  * @param string $id
  * @return void
  */
-	public function delete($id = null) {
-		$this->Role->id = $id;
-		if (!$this->Role->exists()) {
-			throw new NotFoundException(__('Invalid role'));
-		}
-		$this->request->allowMethod('post', 'delete');
-		if ($this->Role->delete()) {
-			$this->Flash->success(__('The role has been deleted.'));
-		} else {
-			$this->Flash->error(__('The role could not be deleted. Please, try again.'));
-		}
-		return $this->redirect(array('action' => 'index'));
-	}
+   public function delete($id)
+    {
+      $this->checkPermission(array("Administrador"));
+        if (!$this->request->is('get')) {
+            throw new MethodNotAllowedException();
+        }
+     
+        $this->Role->id = $id;
+        if ($this->Role->delete()) {
+            $this->Flash->success(__("Se ha eliminado el Rol satisfactoriamente"));
+        } else {
+            $this->Flash->error(__("el rol con el id: %s no se puede eliminar", h($id)));
+        }
+
+        return $this->redirect(array('action' => 'index'));
+    }
 }
