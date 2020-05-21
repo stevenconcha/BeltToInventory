@@ -37,7 +37,6 @@
 				<i class="fa fa-files-o"></i>
 				<span>Users</span>
 				<span class="pull-right-container">
-				<span class="label label-primary pull-right">4</span>
 				</span>
 			</a>
 			<ul class="treeview-menu">
@@ -45,6 +44,18 @@
 				<li><a href="<?php echo WEB_ROOT;?>/users/index"><i class="fa fa-circle-o"></i> Gestionar Usuarios</a></li> 
 				<li><a href="<?php echo WEB_ROOT;?>/roles/index"><i class="fa fa-circle-o"></i> Gestionar Roles</a></li>
 			</ul>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-files-o"></i>
+                    <span>Productos</span>
+                    <span class="pull-right-container">
+                        <span class="label label-primary pull-right"></span>
+                    </span>
+                </a>
+                <ul class="treeview-menu">                   
+                    <li><a href="<?php echo WEB_ROOT;?>/Products"><i class="fa fa-circle-o"></i> Gestionar Productos</a></li>
+                </ul>
+            </li>
 		</ul>
 		</section>
 		<!-- /.sidebar -->

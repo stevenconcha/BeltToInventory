@@ -27,7 +27,7 @@ class User extends AppModel
             ),
             'lastname_must_be_alphabet' => array(
                 'rule' =>  array('custom', '/^[a-zA-Z]*$/i'),
-                'message' => 'El campo Apellidos debe ser alfanumerico '
+                'message' => 'El campo Apellidos debe ser alfabetico '
             ),
             'lastname_must_be_max' => array(
                 'rule' =>  array('maxLength', 32),

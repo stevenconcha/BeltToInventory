@@ -1,64 +1,151 @@
-<div class="products index">
-	<h2><?php echo __('Products'); ?></h2>
-	<table cellpadding="0" cellspacing="0">
-	<thead>
-	<tr>
-			<th><?php echo $this->Paginator->sort('id'); ?></th>
-			<th><?php echo $this->Paginator->sort('codigo'); ?></th>
-			<th><?php echo $this->Paginator->sort('nombre_prod'); ?></th>
-			<th><?php echo $this->Paginator->sort('talla'); ?></th>
-			<th><?php echo $this->Paginator->sort('stock'); ?></th>
-			<th><?php echo $this->Paginator->sort('v_unitario'); ?></th>
-			<th><?php echo $this->Paginator->sort('iva'); ?></th>
-			<th><?php echo $this->Paginator->sort('id_almacen'); ?></th>
-			<th><?php echo $this->Paginator->sort('create_by'); ?></th>
-			<th><?php echo $this->Paginator->sort('create_at'); ?></th>
-			<th><?php echo $this->Paginator->sort('update_by'); ?></th>
-			<th><?php echo $this->Paginator->sort('update_at'); ?></th>
-			<th class="actions"><?php echo __('Actions'); ?></th>
-	</tr>
-	</thead>
-	<tbody>
-	<?php foreach ($products as $product): ?>
-	<tr>
-		<td><?php echo h($product['Product']['id']); ?>&nbsp;</td>
-		<td><?php echo h($product['Product']['codigo']); ?>&nbsp;</td>
-		<td><?php echo h($product['Product']['nombre_prod']); ?>&nbsp;</td>
-		<td><?php echo h($product['Product']['talla']); ?>&nbsp;</td>
-		<td><?php echo h($product['Product']['stock']); ?>&nbsp;</td>
-		<td><?php echo h($product['Product']['v_unitario']); ?>&nbsp;</td>
-		<td><?php echo h($product['Product']['iva']); ?>&nbsp;</td>
-		<td><?php echo h($product['Product']['id_almacen']); ?>&nbsp;</td>
-		<td><?php echo h($product['Product']['create_by']); ?>&nbsp;</td>
-		<td><?php echo h($product['Product']['create_at']); ?>&nbsp;</td>
-		<td><?php echo h($product['Product']['update_by']); ?>&nbsp;</td>
-		<td><?php echo h($product['Product']['update_at']); ?>&nbsp;</td>
-		<td class="actions">
-			<?php echo $this->Html->link(__('View'), array('action' => 'view', $product['Product']['id'])); ?>
-			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $product['Product']['id'])); ?>
-			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $product['Product']['id']), array('confirm' => __('Are you sure you want to delete # %s?', $product['Product']['id']))); ?>
-		</td>
-	</tr>
-<?php endforeach; ?>
-	</tbody>
-	</table>
-	<p>
-	<?php
-	echo $this->Paginator->counter(array(
-		'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}')
-	));
-	?>	</p>
-	<div class="paging">
-	<?php
-		echo $this->Paginator->prev('< ' . __('previous'), array(), null, array('class' => 'prev disabled'));
-		echo $this->Paginator->numbers(array('separator' => ''));
-		echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));
-	?>
-	</div>
+<?php
+
+$cakeDescription = __d('cake_dev', 'Administrar Productos');
+$cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version());
+$paginator = $this->Paginator;
+
+?>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
+
+<section class="content-header">
+    <h1>
+        Administrar Productos
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Products</a></li>
+        <li class="active">Administrar Productos</li>
+    </ol>
+</section>
+
+
+
+<section class="content">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+					<?php 
+					echo $this->Html->link(
+						$this->Html->tag('i', '', array('class' => 'glyphicon glyphicon-plus')), 
+						array('controller' => 'Products', 'action' => 'add'), 
+						array(
+						'class'=>'btn btn-sm btn-success',
+						'title' => 'Nuevo Producto',
+						'escape' => false), 
+					false);
+					?>
+                </div>
+                <div class="box-body">
+					<?php echo $this->Flash->render(); ?>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th> <?php echo $paginator->sort('codigo', 'Código');?> </th>
+                                    <th> <?php echo $paginator->sort('nombre_prod', 'Nombre Producto');?> </th>
+                                     <th> <?php echo $paginator->sort('modelo', 'Modelo');?> </th>
+                                    <th> <?php echo $paginator->sort('talla', 'Talla');?> </th>
+                                    <th> <?php echo $paginator->sort('v_unitario', 'Precio');?> </th>
+                                    <th> <?php echo $paginator->sort('id_almacen', 'Almacen');?> </th>                                   
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+							<?php $start = $paginator->counter(array('format' => '%start%'));
+							 foreach ($products as $product) :
+							  $product_id = $product['Product']['id'];
+							?>
+                                <tr>                                    
+                                    <td><?php echo $product['Product']['codigo']; ?></td>
+                                    <td><?php echo $product['Product']['nombre_prod']; ?></td>
+                                    <td><?php echo $product['Product']['modelo']; ?></td>
+                                    <td><?php echo $product['Product']['talla']; ?></td>
+                                    <td><?php echo $product['Product']['v_unitario']; ?></td>
+                                    <td><?php echo $product['Store']['nombre']; ?></td>
+                                    <td>
+									<?php 
+									echo $this->Html->link(
+										$this->Html->tag('i', '', array('class' => 'glyphicon glyphicon-info-sign')), 
+										array('controller' => 'Products', 'action' => 'view/'.$product_id), 
+										array(
+										'class'=>'btn btn-sm btn-primary mar_right5',
+										'title' => 'Ver Producto',
+										'escape' => false), 
+									false);
+
+									echo $this->Html->link(
+										$this->Html->tag('i', '', array('class' => 'glyphicon glyphicon-edit')), 
+										array('controller' => 'Products', 'action' => 'edit/'.$product_id), 
+										array(
+										'class'=>'btn btn-sm btn-success mar_right5',
+										'title' => 'Editar Producto',
+										'escape' => false), 
+									false);
+
+									
+									echo $this->Html->link(
+										$this->Html->tag('i', '', array('class' => 'glyphicon glyphicon-remove-circle')), 
+										'#', 
+										array(
+										'class'=>'btn btn-sm btn-danger btn-confirm ',
+										'title' => 'Eliminar Producto',
+										'onclick' => 'deleteModal('.$product_id.')',
+										'escape' => false), 
+									false);
+									?>
+                                    </td>
+                                </tr>
+							<?php $start++;
+							endforeach;
+							unset($product);
+							?>
+                            </tbody>	
+                        </table>
+
+                        <div class="pagination pagination-large">
+                            <ul class="pagination">
+								<?php
+									echo $this->Paginator->prev(__('Prev'), array('tag' => 'li'), null, array('tag' => 'li','class' => 'disabled','disabledTag' => 'a'));
+									echo $this->Paginator->numbers(array('separator' => '','currentTag' => 'a', 'currentClass' => 'active','tag' => 'li','first' => 1));
+									echo $this->Paginator->next(__('Next'), array('tag' => 'li','currentClass' => 'disabled'), null, array('tag' => 'li','class' => 'disabled','disabledTag' => 'a'));
+								?>
+                            </ul>
+                        </div>		
+                    </div>
+                </div>
+            </div>			
+        </div>
+    </div>
+</section>
+
+
+<!-- Modal confirm -->
+<div class="modal" id="ConfirmDelete" style="display: none; z-index: 1050;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body" id="confirmMessage">
+                Esta seguro de eliminar el Producto?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-primary" id="confirmOk">Ok</button>
+                <button type="button" class="btn btn-sm btn-danger" id="confirmCancel">Cancel</button>
+            </div>
+        </div>
+    </div>
 </div>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
-		<li><?php echo $this->Html->link(__('New Product'), array('action' => 'add')); ?></li>
-	</ul>
-</div>
+
+<script type="text/javascript">
+    function deleteModal(id)
+    {
+        $("#ConfirmDelete").modal('show');
+        $("#confirmOk").attr('data-product', id);
+    }
+    $("#confirmOk").click(function () {
+        var productId = $("#confirmOk").attr('data-product');
+        window.location.href = "<?php echo $this->webroot;?>Products/delete/" + productId;
+    });
+    $("#confirmCancel").click(function () {
+        $("#ConfirmDelete").modal('hide');
+    });
+</script>

@@ -149,9 +149,9 @@ class UsersController extends AppController
 
         $this->User->id = $id;
         if ($this->User->saveField('status', 0)) {
-            $this->Flash->success(__("User has been deleted successfully"));
+            $this->Flash->success(__("El usuario se ha eliminado satisfactoriamente"));
         } else {
-            $this->Flash->error(__("The user with id: %s could not be deletd", h($id)));
+            $this->Flash->error(__("El usuario con el id: %s no se puede eliminar", h($id)));
         }
 
         return $this->redirect(array('action' => 'index'));

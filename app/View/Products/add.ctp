@@ -1,27 +1,169 @@
-<div class="products form">
-<?php echo $this->Form->create('Product'); ?>
-	<fieldset>
-		<legend><?php echo __('Add Product'); ?></legend>
-	<?php
-		echo $this->Form->input('codigo');
-		echo $this->Form->input('nombre_prod');
-		echo $this->Form->input('talla');
-		echo $this->Form->input('stock');
-		echo $this->Form->input('v_unitario');
-		echo $this->Form->input('iva');
-		echo $this->Form->input('id_almacen');
-		echo $this->Form->input('create_by');
-		echo $this->Form->input('create_at');
-		echo $this->Form->input('update_by');
-		echo $this->Form->input('update_at');
-	?>
-	</fieldset>
-<?php echo $this->Form->end(__('Submit')); ?>
-</div>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
+<?php
 
-		<li><?php echo $this->Html->link(__('List Products'), array('action' => 'index')); ?></li>
-	</ul>
-</div>
+/**
+ * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
+ * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://cakephp.org CakePHP(tm) Project
+ * @package       app.View.Layouts
+ * @since         CakePHP(tm) v 0.10.0.1076
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ */
+
+$cakeDescription = __d('cake_dev', 'CakePHP: Add user');
+$cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
+?>
+<section class="content-header">
+    <h1>
+        Nuevo Producto
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="<?php echo WEB_ROOT;?>/Products/index">Productos</a></li>
+        <li class="active">Nuevo Producto</li>
+    </ol>
+</section>
+
+
+<section class="content">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="box box-primary">
+                <div class="box-body">
+					<?php
+						echo $this->Form->create('Product', array(
+							'class' => 'form-horizontal',
+							'formnovalidate' => true
+						));
+
+						echo $this->Form->input('codigo', array(
+							'required' => false,                                                      
+							'class' => 'form-control',
+                                                        'placeholder' => 'Código',
+							'label' => array('class' => 'col-sm-2 control-label',  "text" => "Código"),
+							'div' => array('class' => 'form-group'),
+							'between' => '<div class="col-md-3">',
+							'after' => '</div>'
+						));
+						echo $this->Form->input('nombre_prod', array(
+							'required' => false,
+                                                        'placeholder' => 'Nombre Producto',
+							'class' => 'form-control',
+							'label' => array('class' => 'col-sm-2 control-label',  "text" => "Nombre Producto"),
+							'div' => array('class' => 'form-group'),
+							'between' => '<div class="col-md-3">',
+							'after' => '</div>'
+						));                                               
+                                                
+                                                echo $this->Form->input('modelo', array(
+							'required' => false,
+                                                        'placeholder' => 'Modelo',
+							'class' => 'form-control',
+							'label' => array('class' => 'col-sm-2 control-label', "text" => "Modelo"),
+							'div' => array('class' => 'form-group'),
+							'between' => '<div class="col-md-3">',
+							'after' => '</div>'
+						));
+                                                
+						echo $this->Form->input('talla', array(
+							'required' => false,
+                                                        'placeholder' => 'Talla',
+							'class' => 'form-control',
+							'label' => array('class' => 'col-sm-2 control-label', "text" => "Talla"),
+							'div' => array('class' => 'form-group'),
+							'between' => '<div class="col-md-3">',
+							'after' => '</div>'
+						));  
+                                                
+						echo $this->Form->input('stock', array(
+							'required' => false,
+                                                        'placeholder' => 'Cantidad del Producto',
+							'class' => 'form-control datepicker',
+							'id' => 'stock',
+							'type' => 'text',
+							'label' => array('class' => 'col-sm-2 control-label', "text" => "Cantidad"),
+							'div' => array('class' => 'form-group'),
+							'between' => '<div class="col-md-3">',
+							'after' => '</div>'
+						));
+                                                
+                                                 echo $this->Form->input('v_unitario', array(
+							'required' => false,
+                                                        'placeholder' => 'Precio',
+							'class' => 'form-control',
+							'id' => 'v_unitario',
+							'type' => 'text',
+							'label' => array('class' => 'col-sm-2 control-label', "text" => "Precio"),
+							'div' => array('class' => 'form-group'),
+							'between' => '<div class="col-md-3">',
+							'after' => '</div>'
+						));
+                                                
+                                                $options = $almacenes;
+						echo $this->Form->input('id_almacen', array(
+							'required' => false,
+							'type' => 'select',							
+							'label' => false,
+							'options' => $options,
+							'class' => 'form-control',
+							'label' => array('class' => 'col-sm-2 control-label', "text" => "Almacen"),
+							'div' => array('class' => 'form-group'),
+							'between' => '<div class="col-md-3">',
+							'after' => '</div>'
+						));
+                                                
+                                                
+                                                echo $this->Form->input('create_at', array(
+                                                    'type' => 'hidden',
+                                                    'value' => $fecha_actual
+                                                    ));
+                                                
+                                                echo $this->Form->input('create_by', array(
+                                                    'type' => 'hidden',
+                                                    'value' => $create_by
+                                                    ));
+                                                
+                                                echo $this->Form->input('iva', array(
+                                                    'type' => 'hidden',
+                                                    'value' => 19
+                                                    ));
+
+						
+
+						echo '<div class="col-sm-offset-2 col-sm-10">';
+						echo $this->Form->submit('Guardar', array(
+							'div' => false,                                                        
+							'class' => 'btn btn-sm btn-primary mar_right5'
+						));
+
+						echo $this->Form->button('Cancelar', array(
+							'type'=>'button',
+							'class' => 'btn btn-sm btn-danger',
+							'div' => false,
+							'onclick' => 'cancelFrm();'
+						));
+						echo '</div>';
+
+						echo $this->Form->end();
+						?>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script>
+
+    function cancelFrm()
+    {
+        window.location.href = "<?php echo $this->webroot;?>Products/index";
+    }
+</script>
+
+

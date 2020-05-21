@@ -30,7 +30,7 @@ $paginator = $this->Paginator;
 						array('controller' => 'Roles', 'action' => 'add'), 
 						array(
 						'class'=>'btn btn-sm btn-success',
-						'title' => 'Add user',
+						'title' => 'Agregar  Rol',
 						'escape' => false), 
 					false);
 					?>
@@ -138,8 +138,8 @@ $paginator = $this->Paginator;
 	 	$("#confirmOk").attr('data-user', id);
 	 }
 	 $("#confirmOk").click(function() {
-	 	var userId = $("#confirmOk").attr('data-user');
-	 	window.location.href= "<?php echo $this->webroot;?>Roles/delete/"+userId;
+	 	var role_id = $("#confirmOk").attr('data-user');
+	 	window.location.href= "<?php echo $this->webroot;?>Roles/delete/"+role_id;
 	 });
 	 $("#confirmCancel").click(function() {
 	 	$("#ConfirmDelete").modal('hide');
