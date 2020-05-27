@@ -43,5 +43,5 @@ CakePlugin::routes();
  */
 require CAKE . 'Config' . DS . 'routes.php';
 
-//define('WEB_ROOT', 'http://9c6d16cb.ngrok.io/IngSoftware/BelttoInventory_ing'); 
-define('WEB_ROOT', 'http://localhost/BeltToInventory');
+
+define('WEB_ROOT', 'http://localhost:9191/IngSoftware/BelttoInventory_ing'); 
