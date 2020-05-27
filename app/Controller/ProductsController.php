@@ -56,14 +56,10 @@ class ProductsController extends AppController {
         if (!$this->Product->exists($id)) {
             throw new NotFoundException(__('Invalid product'));
         }
-
-
         /* $options = array('conditions' => array('Store.id' => "1"));
           $productos = $this->Product->Store->find('first', $options);
           print_r($productos);
           exit; */
-
-
         $options = array('conditions' => array('Product.' . $this->Product->primaryKey => $id));
         $product = $this->Product->find('first', $options);
 //        echo "<pre>";

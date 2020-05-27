@@ -297,7 +297,7 @@ class UsersController extends AppController
 
  public function invalidRol() {
     $this->Flash->error(__("Rol invalido para ejecutar esta operación"));
-   $this->redirect('/pages/home');
+    $this->redirect('/pages/home');
  }
 
  public function recuperarPass() {

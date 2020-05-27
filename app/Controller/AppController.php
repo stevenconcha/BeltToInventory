@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Application level Controller
  *
@@ -18,7 +19,6 @@
  * @since         CakePHP(tm) v 0.2.9
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-
 App::uses('Controller', 'Controller');
 
 /**
@@ -31,31 +31,34 @@ App::uses('Controller', 'Controller');
  * @link		http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
 class AppController extends Controller {
+
+    public $helpers = array('Html', 'Form', 'Flash');
+   
     //public $components = array(); //'DebugKit.Toolbar'
-/*
- public $components = array(
-        'Session',
-        'Auth' => array(
-            'loginRedirect' => array(
-                'controller' => 'posts',
-                'action' => 'index'
-            ),
-            'logoutRedirect' => array(
-                'controller' => 'pages',
-                'action' => 'display',
-                'home'
-            ),
-            'authenticate' => array(
-                'Form' => array(
-                    'passwordHasher' => 'Blowfish'
-                )
-            )
-        )
-    );
-    */
+    /*
+      public $components = array(
+      'Session',
+      'Auth' => array(
+      'loginRedirect' => array(
+      'controller' => 'posts',
+      'action' => 'index'
+      ),
+      'logoutRedirect' => array(
+      'controller' => 'pages',
+      'action' => 'display',
+      'home'
+      ),
+      'authenticate' => array(
+      'Form' => array(
+      'passwordHasher' => 'Blowfish'
+      )
+      )
+      )
+      );
+     */
 
 
- public $components = array(
+    public $components = array(
         'Session',
         'Auth' => array(
             "loginRedirect" => array("controller" => "pages", "action" => "display"),
@@ -79,9 +82,9 @@ class AppController extends Controller {
     public function checkPermission($keys) {
         $roles = $this->Session->read("roles");
         if ($keys == null || !is_array($keys)) {
-            if($keys == "All" && count($roles) > 0){
+            if ($keys == "All" && count($roles) > 0) {
                 return;
-            }else{
+            } else {
                 $this->redirect(array("controller" => "users", "action" => "invalidRol"));
             }
         }
@@ -94,11 +97,9 @@ class AppController extends Controller {
         }
         $this->redirect(array("controller" => "users", "action" => "invalidRol"));
     }
-	
+
     public function beforeFilter() {
         $this->Auth->allow('index', 'view');
-    
     }
-
 
 }

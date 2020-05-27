@@ -1,20 +1,23 @@
 <?php
 
-$cakeDescription = __d('cake_dev', 'Administrar Bodegas');
+$cakeDescription = __d('cake_dev', 'Administrar PQRS');
 $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version());
 $paginator = $this->Paginator;
+
+//echo "<pre>";
+//print_r( $_SESSION["usuarios"]['User']);die;
 
 ?>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
 
 <section class="content-header">
     <h1>
-        Administrar Bodegas
+        <?php echo ($rol=="Comprador") ? "Mis" : "Administrar" ;?>  PQRS
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Inicio</a></li>
-        <li><a href="#">Bodegas</a></li>
-        <li class="active">Administrar Bodegas</li>
+        <li><a href="#">PQRS</a></li>
+        <li class="active"><?php echo ($rol=="Comprador") ? "Mis" : "Administrar" ;?> PQRS</li>
     </ol>
 </section>
 
@@ -27,10 +30,10 @@ $paginator = $this->Paginator;
                     <?php 
                     echo $this->Html->link(
                             $this->Html->tag('i', '', array('class' => 'glyphicon glyphicon-plus')), 
-                            array('controller' => 'Stores', 'action' => 'add'), 
+                            array('controller' => 'Pqrs', 'action' => 'add'), 
                             array(
                             'class'=>'btn btn-sm btn-success',
-                            'title' => 'Nueva Bodega',
+                            'title' => 'Nueva Pqr',
                             'escape' => false), 
                     false);
                     ?>
@@ -42,58 +45,65 @@ $paginator = $this->Paginator;
                             <thead>
                                 <tr>
                                     <th> <?php echo $paginator->sort('id', 'ID');?> </th>
-                                    <th> <?php echo $paginator->sort('nombre', 'Descripción');?> </th>
-                                    <th> <?php echo $paginator->sort('direccion', 'Dirección');?> </th>
-                                    <th> <?php echo $paginator->sort('telefono', 'Teléfono');?> </th>                                   
+                                    <th> <?php echo $paginator->sort('descripcion', 'Descripción');?> </th>
+                                    <th> <?php echo $paginator->sort('nombre_completo', 'Usuario');?> </th>
+                                    <th> <?php echo $paginator->sort('telefono', 'Teléfono');?> </th>   
+                                    <th> <?php echo $paginator->sort('fecha_solicitud', 'Fecha Solicitud');?> </th>   
+                                    <th> <?php echo $paginator->sort('estado', 'Estado');?> </th>  
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php $start = $paginator->counter(array('format' => '%start%'));
-                                 foreach ($stores as $store) :
-                                  $store_id = $store['Store']['id'];
+                                 foreach ($pqrs as $pqr) :
+                                  $pqr_id = $pqr['Pqr']['id'];
                                 ?>
                                 <tr>                                    
-                                    <td><?php echo $store['Store']['id']; ?></td>
-                                    <td><?php echo $store['Store']['nombre']; ?></td>
-                                    <td><?php echo $store['Store']['direccion']; ?></td>
-                                    <td><?php echo $store['Store']['telefono']; ?></td>                                    
+                                    <td><?php echo $pqr['Pqr']['id']; ?></td>
+                                    <td><?php echo substr($pqr['Pqr']['descripcion'],0, 50).".."; ?></td>
+                                    <td><?php echo $pqr['Pqr']['nombre_completo']; ?></td>
+                                    <td><?php echo $pqr['Pqr']['telefono']; ?></td>   
+                                    <td><?php echo $pqr['Pqr']['fecha_solicitud']; ?></td>  
+                                    <td><?php echo $pqr['Pqr']['estado']; ?></td>  
                                     <td>
                                         <?php 
+                                        
                                         echo $this->Html->link(
                                                 $this->Html->tag('i', '', array('class' => 'glyphicon glyphicon-info-sign')), 
-                                                array('controller' => 'Stores', 'action' => 'view/'.$store_id), 
+                                                array('controller' => 'Pqrs', 'action' => 'view/'.$pqr_id), 
                                                 array(
                                                 'class'=>'btn btn-sm btn-primary mar_right5',
-                                                'title' => 'Ver Bodega',
+                                                'title' => 'Ver Pqr',
                                                 'escape' => false), 
                                         false);
 
-                                        echo $this->Html->link(
-                                                $this->Html->tag('i', '', array('class' => 'glyphicon glyphicon-edit')), 
-                                                array('controller' => 'Stores', 'action' => 'edit/'.$store_id), 
-                                                array(
-                                                'class'=>'btn btn-sm btn-success mar_right5',
-                                                'title' => 'Editar Bodega',
-                                                'escape' => false), 
-                                        false);
+                                        if($rol != "Comprador"){
+                                            echo $this->Html->link(
+                                                    $this->Html->tag('i', '', array('class' => 'glyphicon glyphicon-edit')), 
+                                                    array('controller' => 'Pqrs', 'action' => 'edit/'.$pqr_id), 
+                                                    array(
+                                                    'class'=>'btn btn-sm btn-success mar_right5',
+                                                    'title' => 'Gestionar Pqr',
+                                                    'escape' => false), 
+                                            false);
 
 
-                                        echo $this->Html->link(
-                                                $this->Html->tag('i', '', array('class' => 'glyphicon glyphicon-remove-circle')), 
-                                                '#', 
-                                                array(
-                                                'class'=>'btn btn-sm btn-danger btn-confirm ',
-                                                'title' => 'Eliminar Bodega',
-                                                'onclick' => 'deleteModal('.$store_id.')',
-                                                'escape' => false), 
-                                        false);
+                                            echo $this->Html->link(
+                                                    $this->Html->tag('i', '', array('class' => 'glyphicon glyphicon-remove-circle')), 
+                                                    '#', 
+                                                    array(
+                                                    'class'=>'btn btn-sm btn-danger btn-confirm ',
+                                                    'title' => 'Eliminar Pqr',
+                                                    'onclick' => 'deleteModal('.$pqr_id.')',
+                                                    'escape' => false), 
+                                            false);                                        
+                                        }
                                         ?>
                                     </td>
                                 </tr>
 							<?php $start++;
 							endforeach;
-							unset($store);
+							unset($pqr);
 							?>
                             </tbody>	
                         </table>
@@ -114,12 +124,14 @@ $paginator = $this->Paginator;
     </div>
 </section>
 
+
+
 <!-- Modal confirm -->
 <div class="modal" id="ConfirmDelete" style="display: none; z-index: 1050;">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body" id="confirmMessage">
-                Esta seguro de eliminar la bodega?
+                Esta seguro de eliminar la Pqr?
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-sm btn-primary" id="confirmOk">Ok</button>
@@ -133,11 +145,11 @@ $paginator = $this->Paginator;
     function deleteModal(id)
     {
         $("#ConfirmDelete").modal('show');
-        $("#confirmOk").attr('data-store', id);
+        $("#confirmOk").attr('data-pqr', id);
     }
     $("#confirmOk").click(function () {
-        var storeId = $("#confirmOk").attr('data-store');
-        window.location.href = "<?php echo $this->webroot;?>Stores/delete/" + storeId;
+        var prqId = $("#confirmOk").attr('data-pqr');
+        window.location.href = "<?php echo $this->webroot;?>Pqrs/delete/" + prqId;
     });
     $("#confirmCancel").click(function () {
         $("#ConfirmDelete").modal('hide');
