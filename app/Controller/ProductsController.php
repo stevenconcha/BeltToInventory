@@ -25,8 +25,24 @@ class ProductsController extends AppController {
      * @return void
      */
     public function index() {
+
+     if(!empty($this->request->data['Product']['keyword'])){
+
+        
+      $cond=array();
+       $cond['Product.nombre_prod LIKE'] = "%" . trim($this->request->data['Product']['keyword']) . "%";
+       $conditions['OR'] = $cond;
+       $this->paginate=array('conditions'=>$conditions,'limit'=>'10');
+        $result = $this->paginate('Product');
+       $this->set('products',$result);
+    
+     }else{
         $this->Product->recursive = 0;
         $this->set('products', $this->Paginator->paginate());
+     }
+  
+     
+        
     }
 
     /**
@@ -51,6 +67,42 @@ class ProductsController extends AppController {
 //        exit();
         $this->set('products', $product);
     }
+
+
+    function Search()
+{
+
+  echo "Entrooo a search ";
+        exit();
+   
+    if(!empty($this->request->data['Product']['keyword'])){
+
+      
+       $cond=array();
+       $cond['Product.nombre_prod LIKE'] = "%" . trim($this->request->data['Product']['keyword']) . "%";
+       $conditions['OR'] = $cond;
+       $this->paginate=array('conditions'=>$conditions,'limit'=>'10');
+        $result = $this->paginate('Product');
+           echo "<pre>";
+    print_r($result);
+    echo "</pre>";
+    exit();
+    $this->set('products',$result);
+     //  $this->request->params['named']['User.keyword'] = $this->request->data['User']['keyword'];
+     }
+    
+ 
+    
+
+    /*
+    $keyword=$this->params->query($this->request->data['Product']['keyword']); //get keyword from querystring//
+    //used simpme or condition with singe value checking
+    //replace ModelName with actual name of your Appmodel
+   // $cond=array('OR'=>array("Product.phone LIKE '%$keyword%'","ModelName.name LIKE '%$keyword%'", "ModelName.email LIKE '%$keyword%'")  );
+
+    $list = $this->ModelName->find('all',array('conditions')=>$cond);
+    */
+}
 
     /**
      * add method
