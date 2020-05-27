@@ -15,18 +15,17 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-$cakeDescription = __d('cake_dev', 'Detalle Bodega');
+$cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework');
 $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 ?>
-
 <section class="content-header">
     <h1>
-        Bodega - <?php echo $store['Store']['nombre']; ?>:
+        Pqrs No. <?php echo $pqr['Pqr']['id']; ?>:
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="<?php echo WEB_ROOT;?>/Stores/index">Users</a></li>
-        <li class="active">View <?php echo $store['Store']['nombre'];?>'s Information</li>
+        <li><a href="<?php echo WEB_ROOT;?>/Pqrs/index">Prqs</a></li>
+        <li class="active">View <?php echo $pqr['Pqr']['id'];?>'s Information</li>
     </ol>
 </section>
 
@@ -40,17 +39,30 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                             <div class="table-responsive">
                                 <table class="table table-striped">	
                                     <tr>
-                                        <td>ID:  <b><?php echo $store['Store']['id']; ?></b></td>
+                                        <td>Tipo Pqrs:  <b><?php echo $pqr['Pqr']['tipo']; ?></b></td>
                                     </tr>
                                     <tr>
-                                        <td>Descripción: <b><?php echo $store['Store']['nombre'] ;?></b></td>
+                                        <td>Descripción:  <br><b><?php echo $pqr['Pqr']['descripcion']; ?></b></td>
                                     </tr>
                                     <tr>
-                                        <td>Dirección: <b><?php echo $store['Store']['direccion'] ;?></b></td>
+                                        <td>Documento:  <b><?php echo $pqr['Pqr']['documento']; ?></b></td>
+                                    </tr>
+                                     <tr>
+                                        <td>Usuario:  <b><?php echo $pqr['Pqr']['nombre_completo']; ?></b></td>
                                     </tr>
                                     <tr>
-                                        <td>Teléfono: <b><?php echo $store['Store']['telefono'] ;?></b></td>
-                                    </tr>                                    																	</table>
+                                        <td>Dirección:  <b><?php echo $pqr['Pqr']['direccion']; ?></b></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Teléfono:  <b><?php echo $pqr['Pqr']['telefono']; ?></b></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Fecha de Solicitud:  <b><?php echo $pqr['Pqr']['fecha_solicitud']; ?></b></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Estado:  <b><?php echo $pqr['Pqr']['estado']; ?></b></td>
+                                    </tr>
+                                </table>
                             </div>		
                         </div>
                         <?php
@@ -69,12 +81,9 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
         </div>
     </div>
 </section>
-
 <script>
     function back()
     {
-        window.location.href = "<?php echo $this->webroot;?>Stores/index";
+        window.location.href = "<?php echo $this->webroot;?>Pqrs/index";
     }
 </script>
-
-
