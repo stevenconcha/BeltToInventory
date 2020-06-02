@@ -52,6 +52,13 @@ class InquiriesController extends AppController {
         $options = array('conditions' => array('Inquiry.' . $this->Inquiry->primaryKey => $id));
         $this->set('inquiry', $this->Inquiry->find('first', $options));
     }
+    
+    
+    public function thanks() {        
+    
+        $this->set('thanks', "Muchas gracias por llenar la encuesta..!");
+    }
+    
 
     /**
      * add method
@@ -71,11 +78,11 @@ class InquiriesController extends AppController {
             $this->Inquiry->set($this->request->data);
             if ($this->Inquiry->validates()) {
                 if ($this->Inquiry->save($this->request->data, $validate = true)) {
-                    $this->Flash->success(__('El Producto ha sido creado'));
-                    return $this->redirect(array('action' => 'add'));
+                    $this->Flash->success(__('La encuesta fue creada'));
+                    return $this->redirect(array('action' => 'thanks'));
                 }
             } else {
-                $this->Flash->error(__('El Producto no fue creado'));
+                $this->Flash->error(__('El no se pudo crear la encuesta'));
             }
         }
     }
