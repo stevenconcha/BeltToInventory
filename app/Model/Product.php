@@ -61,6 +61,7 @@ class Product extends AppModel {
             )
         )
     );
+
     /**
      * belongsTo associations
      *
@@ -75,5 +76,7 @@ class Product extends AppModel {
             'order' => ''
         )
     );
+    
+ 
 
 }

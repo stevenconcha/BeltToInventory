@@ -3,8 +3,8 @@
 App::import("Helper", "Menu"); ?>
 <?php 
     $user = $this->Session->read('usuarios');
-    $roles = $this->Session->read('roles');
-   if($roles != null){
+    $roles = $this->Session->read('roles');  
+       if($roles != null){
 ?>
 <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
@@ -56,7 +56,7 @@ App::import("Helper", "Menu"); ?>
                 </a>
                 <ul class="treeview-menu">                   
                     <li><a href="<?php echo WEB_ROOT;?>/Products"><i class="fa fa-circle-o"></i> Gestionar Productos</a></li>
-                </ul>
+                </ul>               
             </li>
             <li class="treeview">
                 <a href="#">
@@ -80,6 +80,24 @@ App::import("Helper", "Menu"); ?>
                 </a>
                 <ul class="treeview-menu">                   
                     <li><a href="<?php echo WEB_ROOT;?>/Pqrs"><i class="fa fa-circle-o"></i> Gestionar PQRS</a></li>
+                </ul>
+            </li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-archive"></i>
+                    <span>Encuesta</span>
+                    <span class="pull-right-container">
+                        <span class="label label-primary pull-right"></span>
+                    </span>
+                </a>
+                <ul class="treeview-menu">  
+                   
+                    <?php  if($roles[1]['nombre'] == "Comprador") {
+                    ?>
+                        <li><a href="<?php echo WEB_ROOT;?>/Inquiries/add"><i class="fa fa-circle-o"></i> Llenar Encuesta</a></li>
+                    <?php }else{ ?>
+                         <li><a href="<?php echo WEB_ROOT;?>/Inquiries"><i class="fa fa-circle-o"></i> Resultados Encuesta</a></li>
+                    <?php }  ?>
                 </ul>
             </li>
         </ul>
