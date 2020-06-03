@@ -1,22 +1,20 @@
-<?php 
-App::import("Model", "Userrole");
+<?php
 
+App::import("Model", "Userrole", "Role");
 
-class UsersController extends AppController 
-{
+class UsersController extends AppController {
+
     public $helpers = array('Html', 'Form', 'Flash');
     public $components = array('Flash');
-    public $uses = array('User', 'Country', 'State', 'City');
- 
+    public $uses = array('User', 'Country', 'State', 'City', 'Role');
+
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('add', 'logout','recuperarPass', 'nuevaclave');
+        $this->Auth->allow('add', 'logout', 'recuperarPass', 'nuevaclave');
         $this->Security->unlockedActions = array('recuperarPass');
     }
-    
 
-    public function index()
-    {
+    public function index() {
         $this->checkPermission(array("Administrador"));
         $this->paginate = array(
             'conditions' => array('status' => '1'),
@@ -27,8 +25,7 @@ class UsersController extends AppController
         $this->set('users', $users);
     }
 
-    public function view($id = null)
-    {
+    public function view($id = null) {
         $this->checkPermission(array("Administrador"));
         $countries = $this->Country->find('all');
         $country_arr = array('' => '--Select one--');
@@ -65,8 +62,7 @@ class UsersController extends AppController
         $this->set('user', $user);
     }
 
-    public function add()
-    {   
+    public function add() {
         $this->checkPermission(array("Administrador")); // agregado por steven
         $countries = $this->Country->find('all');
         $country_arr = array('' => '--Select one--');
@@ -74,24 +70,36 @@ class UsersController extends AppController
             $country_arr[$country['Country']['id']] = $country['Country']['country_name'];
         }
         unset($country);
+
+
+        $roles = $this->Role->find('all');
+        $roles_arr = array('' => '--Select one--');
+        foreach ($roles as $objRoles) {
+            $roles_arr[$objRoles['Role']['id']] = $objRoles['Role']['nombre'];
+            unset($objRoles);
+        }
+        $this->set('roles', $roles_arr);
         $this->set('countries', $country_arr);
         if ($this->request->is('post')) {
             $this->User->create();
-            $this->User->set($this->request->data);            
+            $this->User->set($this->request->data);
             if ($this->User->validates()) {
-                if ($this->User->save($this->request->data, $validate=false)) {
+                if ($this->User->save($this->request->data, $validate = false)) {
+                    $user = $this->User->query('SELECT id FROM users where document = ' . $this->request->data['User']['document']);
+                    $idUser = $user[0]['users']['id'];
+                    $idRol = $this->request->data['User']['id_rol'];
+                    $this->User->query('insert into usuarioroles (role_id,usuario_id,activo) values (' . $idRol . ', ' . $idUser . ',1)');
                     $this->Flash->success(__("User has been saved successfully"));
-                    return $this->redirect(array('action'=>'index'));
+                    return $this->redirect(array('action' => 'index'));
                 }
                 $this->Flash->error(__('Unable to add user'));
             } else {
                 $errors = $this->User->validationErrors;
-            }            
+            }
         }
     }
 
-    public function edit($id = null)
-    {
+    public function edit($id = null) {
         $this->checkPermission(array("Administrador"));
         if (!$id) {
             throw new NotFoundException(__("Invalid user"));
@@ -126,9 +134,22 @@ class UsersController extends AppController
         unset($city);
         $this->set('cities', $city_arr);
 
+
+        $roles = $this->Role->find('all');
+        $roles_arr = array('' => '--Select one--');
+        foreach ($roles as $objRoles) {
+            $roles_arr[$objRoles['Role']['id']] = $objRoles['Role']['nombre'];
+            unset($objRoles);
+        }
+        $this->set('roles', $roles_arr);
+
+
         if ($this->request->is(array('post', 'put'))) {
             $this->User->id = $id;
             if ($this->User->save($this->request->data)) {
+                $idUser = $this->request->data['User']['id'];
+                $idRol = $this->request->data['User']['id_rol'];
+                $this->User->query('update usuarioroles set role_id = ' . $idRol . ' where usuario_id =' . $idUser);
                 $this->Flash->success(__('User has been updated successfully'));
                 return $this->redirect(array('action' => 'index'));
             }
@@ -140,9 +161,8 @@ class UsersController extends AppController
         }
     }
 
-    public function delete($id)
-    {
-      $this->checkPermission(array("Administrador"));
+    public function delete($id) {
+        $this->checkPermission(array("Administrador"));
         if (!$this->request->is('get')) {
             throw new MethodNotAllowedException();
         }
@@ -157,9 +177,8 @@ class UsersController extends AppController
         return $this->redirect(array('action' => 'index'));
     }
 
-    public function getStates($country_id)
-    {
-        $states = $this->State->find('all', array('conditions'=>array('country_id =' => $country_id)));
+    public function getStates($country_id) {
+        $states = $this->State->find('all', array('conditions' => array('country_id =' => $country_id)));
         $state_arr = array();
         foreach ($states as &$state) {
             $state_arr[$state['State']['id']] = $state['State']['state_name'];
@@ -168,10 +187,9 @@ class UsersController extends AppController
         echo json_encode($state_arr);
         exit;
     }
-    
-    public function getCity($state_id)
-    {
-        $cities = $this->City->find('all', array('conditions'=>array('state_id =' => $state_id)));
+
+    public function getCity($state_id) {
+        $cities = $this->City->find('all', array('conditions' => array('state_id =' => $state_id)));
         $city_arr = array();
         foreach ($cities as &$city) {
             $city_arr[$city['City']['id']] = $city['City']['city_name'];
@@ -182,19 +200,18 @@ class UsersController extends AppController
         exit;
     }
 
- 
     public function login() {
 
-    if ($this->request->is('post')) {
-                                  
-        if ($this->Auth->login($this->request->data['User']['document'])) {
+        if ($this->request->is('post')) {
 
-        //   echo "Entro ". $this->request->data['User']['pass'];
-        //   echo "Entro2 ". AuthComponent::password($this->request->data['User']['pass']);
-        //   450aea5ebad6dc562fcc28ac8d5f85272597c6a4 
-        //   450aea5ebad6dc562fcc28ac8d5f85272597c6a4
-        //   exit();  
-              $this->User->recursive = 0;
+            if ($this->Auth->login($this->request->data['User']['document'])) {
+
+                //   echo "Entro ". $this->request->data['User']['pass'];
+                //   echo "Entro2 ". AuthComponent::password($this->request->data['User']['pass']);
+                //   450aea5ebad6dc562fcc28ac8d5f85272597c6a4 
+                //   450aea5ebad6dc562fcc28ac8d5f85272597c6a4
+                //   exit();  
+                $this->User->recursive = 0;
                 $document = $this->Auth->user();
                 $user = $this->User->find("first", array("conditions" => array(
                         "User.document" => $document,
@@ -207,7 +224,7 @@ class UsersController extends AppController
                     $this->Session->destroy();
                     //$this->Session->setFlash("Informacion de Usuario no valida");
                     $this->Flash->error(__("Informacion de Usuario no valida."));
-                //    $this->Flash->success(__("User has been saved successfully"));
+                    //    $this->Flash->success(__("User has been saved successfully"));
 
                     $this->redirect($this->Auth->logout());
                 }
@@ -216,12 +233,12 @@ class UsersController extends AppController
                     $this->Session->destroy();
                     //$this->Session->setFlash("Informacion de Usuario no valida");
                     $this->Flash->error(__("Informacion de Usuario no valida,"));
-                  //                      $this->Flash->success(__("User has been saved successfully"));
+                    //                      $this->Flash->success(__("User has been saved successfully"));
 
                     $this->redirect($this->Auth->logout());
-                }  
-           
-            $this->Session->write("usuarios", $user);
+                }
+
+                $this->Session->write("usuarios", $user);
                 $i = 1;
                 $this->User->Usuariorole->recursive = 0;
                 $rolesAsignados = $this->User->Usuariorole->find("all", array("fields" => array(
@@ -234,10 +251,10 @@ class UsersController extends AppController
                     $this->Session->destroy();
                     $this->redirect($this->Auth->logout());
                 }
-                    $lider = null;
-                    $liderId = null;
+                $lider = null;
+                $liderId = null;
 
-                    foreach ($rolesAsignados as $rolAsignado) {
+                foreach ($rolesAsignados as $rolAsignado) {
                     $roles[$i]['nombre'] = $rolAsignado['Role']['nombre'];
                     $roles[$i]['descripcion'] = $rolAsignado['Role']['descripcion'];
                     $roles[$i]['activo'] = $rolAsignado['Usuariorole']['activo'];
@@ -245,7 +262,7 @@ class UsersController extends AppController
                     if (isset($rolAsignado['Usuariorole']['opcional'])) {
                         if ($rolAsignado['Usuariorole']['opcional'] != "" || $rolAsignado['Usuariorole']['opcional'] != null) {
                             $lider = explode(",", $rolAsignado['Usuariorole']['opcional']);
-                            $liderId = $rolAsignado['Usuariorole']['id'];   
+                            $liderId = $rolAsignado['Usuariorole']['id'];
                         }
                     }
                     if ($rolAsignado['Role']['nombre'] == "Administrador") {
@@ -263,25 +280,21 @@ class UsersController extends AppController
                     $this->Session->write("lider", $lider);
                     $this->Session->write("liderId", $liderId);
                 }
-                
-               
+
+
                 $this->Session->write("roles", $roles);
 
- 
-           
+
+
                 $this->redirect('/pages/home');
-           
-           //     $this->redirect('/roles/index');
-             
-              
+
+                //     $this->redirect('/roles/index');
+            }
+            $this->Session->setFlash(__('Informacion invalida, Intentar de nuevo'));
         }
-        $this->Session->setFlash(__('Informacion invalida, Intentar de nuevo'));
     }
-}
 
-
-
-  public function logout() {
+    public function logout() {
         $this->Session->destroy();
         if (isset($_SERVER['HTTP_COOKIE'])) {
             $cookies = explode(';', $_SERVER['HTTP_COOKIE']);
@@ -295,12 +308,12 @@ class UsersController extends AppController
         $this->redirect($this->Auth->logout());
     }
 
- public function invalidRol() {
-    $this->Flash->error(__("Rol invalido para ejecutar esta operación"));
-    $this->redirect('/pages/home');
- }
+    public function invalidRol() {
+        $this->Flash->error(__("Rol invalido para ejecutar esta operación"));
+        $this->redirect('/pages/home');
+    }
 
- public function recuperarPass() {
+    public function recuperarPass() {
         if ($this->request->is('post')) {
             $this->User->recursive = -1;
             $usuario = $this->User->find('all', [
@@ -319,7 +332,7 @@ class UsersController extends AppController
                     $this->Flash->error(__("Se envió un correo electronico con los pasos para reestablecer su contraseña de ingreso"));
                     $this->Session->setFlash("Se envió un correo electronico con los pasos para reestablecer su contraseña de ingreso");
                 } else {
-                   $this->Flash->error(__("No fue posible enviar el correo electronico. Por favor intentelo mas tarde"));
+                    $this->Flash->error(__("No fue posible enviar el correo electronico. Por favor intentelo mas tarde"));
                     $this->Session->setFlash("No fue posible enviar el correo electronico. Por favor intentelo mas tarde");
                 }
             }
@@ -327,25 +340,24 @@ class UsersController extends AppController
         }
     }
 
-
-     public function nuevaclave($codigo) {
+    public function nuevaclave($codigo) {
         if ($this->request->is('post')) {
 
             $this->User->recursive = -1;
             $usuario = $this->User->find("all", [
                 "conditions" => ["User.pass" => AuthComponent::password($codigo)]
             ]);
-  
 
-           
+
+
             if (empty($usuario)) {
                 $this->Session->setFlash("codigo de verificacion no valido");
             } else {
                 if ($this->request->data['User']['pass'] == $this->request->data['User']['confirmacion']) {
                     $this->User->id = $usuario[0]['User']['id'];
                     $this->User->saveField('pass', $this->request->data['User']['pass']);
-                 
-                  //  $this->User->saveField('pass', "0");
+
+                    //  $this->User->saveField('pass', "0");
                 } else {
                     $this->Session->setFlash("las claves ingresadas no coinsiden. por favor vuelva a intertarlo");
                 }

@@ -76,4 +76,20 @@ class Product extends AppModel {
         )
     );
 
+     public $hasMany = array(
+        'Sale' => array(
+            'className' => 'Sale',
+            'foreignKey' => 'id_prod',
+            'dependent' => false,
+            'conditions' => '',
+            'fields' => '',
+            'order' => '',
+            'limit' => '',
+            'offset' => '',
+            'exclusive' => '',
+            'finderQuery' => '',
+            'counterQuery' => ''
+        )
+    );
+
 }

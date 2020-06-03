@@ -58,6 +58,18 @@ App::import("Helper", "Menu"); ?>
                     <li><a href="<?php echo WEB_ROOT;?>/Products"><i class="fa fa-circle-o"></i> Gestionar Productos</a></li>
                 </ul>
             </li>
+             <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-shopping-cart"></i>
+                    <span>Ventas</span>
+                    <span class="pull-right-container">
+                        <span class="label label-primary pull-right"></span>
+                    </span>
+                </a>
+                <ul class="treeview-menu">                   
+                    <li><a href="<?php echo WEB_ROOT;?>/Sales"><i class="fa fa-circle-o"></i> Gestionar Ventas</a></li>
+                </ul>
+            </li>
             <li class="treeview">
                 <a href="#">
                     <i class="fa fa-home"></i>

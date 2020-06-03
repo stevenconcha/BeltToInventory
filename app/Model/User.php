@@ -133,7 +133,35 @@ class User extends AppModel
             'foreignKey' => 'usuario_id',
             'dependent' => false,
             'conditions' => '',
+        ),
+          'Sale' => array(
+            'className' => 'Sale',
+            'foreignKey' => 'user_id',
+            'dependent' => false,
+            'conditions' => '',
+            'fields' => '',
+            'order' => '',
+            'limit' => '',
+            'offset' => '',
+            'exclusive' => '',
+            'finderQuery' => '',
+            'counterQuery' => ''
+        ),
+        'Inquiry' => array(
+            'className' => 'Inquiry',
+            'foreignKey' => 'id_usuario',
+            'dependent' => false,
+            'conditions' => '',
+            'fields' => '',
+            'order' => '',
+            'limit' => '',
+            'offset' => '',
+            'exclusive' => '',
+            'finderQuery' => '',
+            'counterQuery' => ''
         )
     );
+
+   
 
 }
