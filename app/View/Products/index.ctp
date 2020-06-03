@@ -36,8 +36,8 @@ $paginator = $this->Paginator;
 					false);
 					?>
                 </div>
-                <?php echo $this->Form->create('Product',array('class'=>'searchForm','role'=>'search','autocomplete'=>'off')); 
-                echo $this->Form->input('keyword',array('class'=>'form-control input-sm','maxlength'=>"64",'placeholder'=>' Search your consultants...','div'=>false,'label'=>false));
+               <?php echo $this->Form->create('Product',array('class'=>'searchForm','role'=>'search','autocomplete'=>'off', 'style' => 'width: 40%;margin-left:5px;')); 
+                echo $this->Form->input('keyword',array('class'=>'form-control input-sm','maxlength'=>"64",'placeholder'=>' Search your consultants...','style' => 'margin-top: 3px;margin-bottom:5px;','div'=>false,'label'=>false));
                  echo $this->Form->submit('Buscar Producto', array(
                             'div' => false,                                                        
                             'class' => 'btn btn-sm btn-primary mar_right5'
