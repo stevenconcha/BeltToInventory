@@ -9,12 +9,12 @@ $paginator = $this->Paginator;
 
 <section class="content-header">
     <h1>
-        Administrar Productos
+        Administrar Ventas
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Products</a></li>
-        <li class="active">Administrar Productos</li>
+        <li><a href="#">Ventas</a></li>
+        <li class="active">Administrar Ventas</li>
     </ol>
 </section>
 
@@ -28,56 +28,46 @@ $paginator = $this->Paginator;
 					<?php 
 					echo $this->Html->link(
 						$this->Html->tag('i', '', array('class' => 'glyphicon glyphicon-plus')), 
-						array('controller' => 'Products', 'action' => 'add'), 
+						array('controller' => 'Sales', 'action' => 'add'), 
 						array(
 						'class'=>'btn btn-sm btn-success',
-						'title' => 'Nuevo Producto',
+						'title' => 'Nueva Venta',
 						'escape' => false), 
 					false);
 					?>
                 </div>
-
-               <?php echo $this->Form->create('Product',array('class'=>'searchForm','role'=>'search','autocomplete'=>'off', 'style' => 'width: 40%;margin-left:5px;')); 
-
-                echo $this->Form->input('keyword',array('class'=>'form-control input-sm','maxlength'=>"64",'placeholder'=>' Search your consultants...','style' => 'margin-top: 3px;margin-bottom:5px;','div'=>false,'label'=>false));
-                 echo $this->Form->submit('Buscar Producto', array(
-                            'div' => false,                                                        
-                            'class' => 'btn btn-sm btn-primary mar_right5'
-                        ));
-                echo $this->Form->end(); 
-        ?>
+            
                 <div class="box-body">
 					<?php echo $this->Flash->render(); ?>
                     <div class="table-responsive">
                         <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th> <?php echo $paginator->sort('codigo', 'Código');?> </th>
-                                    <th> <?php echo $paginator->sort('nombre_prod', 'Nombre Producto');?> </th>
-                                     <th> <?php echo $paginator->sort('modelo', 'Modelo');?> </th>
-                                    <th> <?php echo $paginator->sort('talla', 'Talla');?> </th>
-                                    <th> <?php echo $paginator->sort('v_unitario', 'Precio');?> </th>
-                                    <th> <?php echo $paginator->sort('id_almacen', 'Almacen');?> </th>                                   
+                                    <th> <?php echo $paginator->sort('id_prod', 'Producto');?> </th>
+                                     <th> <?php echo $paginator->sort('user_id', 'Usuario');?> </th>
+                                     <th> <?php echo $paginator->sort('fistsname', 'Nombre Comprador');?> </th>
+                                     <th> <?php echo $paginator->sort('fecha_venta', 'Fecha Que se Realizo la venta');?> </th>
+                                     <th> <?php echo $paginator->sort('cantidad', 'Cantidad');?> </th>
+                                                            
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
 							<?php $start = $paginator->counter(array('format' => '%start%'));
 							 foreach ($products as $product) :
-							  $product_id = $product['Product']['id'];
+							  $product_id = $product['Sale']['id'];
 							?>
-                                <tr>                                    
-                                    <td><?php echo $product['Product']['codigo']; ?></td>
-                                    <td><?php echo $product['Product']['nombre_prod']; ?></td>
-                                    <td><?php echo $product['Product']['modelo']; ?></td>
-                                    <td><?php echo $product['Product']['talla']; ?></td>
-                                    <td><?php echo $product['Product']['v_unitario']; ?></td>
-                                    <td><?php echo $product['Store']['nombre']; ?></td>
+                                <tr>            
+                                    <td><?php echo $product['Product']['nombre_prod']; ?></td>   
+                                    <td><?php echo $product['User']['document']; ?></td>   
+                                    <td><?php echo $product['User']['firstname']; ?></td>                        
+                                    <td><?php echo $product['Sale']['fecha_venta']; ?></td>
+                                    <td><?php echo $product['Sale']['cantidad']; ?></td>    
                                     <td>
 									<?php 
 									echo $this->Html->link(
 										$this->Html->tag('i', '', array('class' => 'glyphicon glyphicon-info-sign')), 
-										array('controller' => 'Products', 'action' => 'view/'.$product_id), 
+										array('controller' => 'Sales', 'action' => 'view/'.$product_id), 
 										array(
 										'class'=>'btn btn-sm btn-primary mar_right5',
 										'title' => 'Ver Producto',
@@ -86,7 +76,7 @@ $paginator = $this->Paginator;
 
 									echo $this->Html->link(
 										$this->Html->tag('i', '', array('class' => 'glyphicon glyphicon-edit')), 
-										array('controller' => 'Products', 'action' => 'edit/'.$product_id), 
+										array('controller' => 'Sales', 'action' => 'edit/'.$product_id), 
 										array(
 										'class'=>'btn btn-sm btn-success mar_right5',
 										'title' => 'Editar Producto',
@@ -135,7 +125,7 @@ $paginator = $this->Paginator;
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body" id="confirmMessage">
-                Esta seguro de eliminar el Producto?
+                Esta seguro de eliminar La Venta?
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-sm btn-primary" id="confirmOk">Ok</button>
@@ -153,7 +143,7 @@ $paginator = $this->Paginator;
     }
     $("#confirmOk").click(function () {
         var productId = $("#confirmOk").attr('data-product');
-        window.location.href = "<?php echo $this->webroot;?>Products/delete/" + productId;
+        window.location.href = "<?php echo $this->webroot;?>Sales/delete/" + productId;
     });
     $("#confirmCancel").click(function () {
         $("#ConfirmDelete").modal('hide');

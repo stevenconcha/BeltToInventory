@@ -32,7 +32,7 @@ class RolesController extends AppController {
 
  public function index()
     {
-        $this->checkPermission(array("Administrador", "Comprador"));
+        $this->checkPermission(array("Administrador"));
         $this->paginate = array(
             'limit' => 3,
             'order' => array('id' => 'desc')
@@ -48,7 +48,7 @@ class RolesController extends AppController {
  * @return void
  */
 	public function view($id = null) {
-	   $this->checkPermission(array("Administrador", "Comprador")); // agregado por steven
+	   $this->checkPermission(array("Administrador")); // agregado por steven
 		if (!$this->Role->exists($id)) {
 			throw new NotFoundException(__('Rol invalido'));
 		}
@@ -84,7 +84,7 @@ class RolesController extends AppController {
 	public function edit($id = null) {
 		$this->checkPermission(array("Administrador")); // agregado por steven
 		if (!$this->Role->exists($id)) {
-			throw new NotFoundException(__('Invalid role'));
+			throw new NotFoundException(__('Invalido rol'));
 		}
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->Role->save($this->request->data)) {

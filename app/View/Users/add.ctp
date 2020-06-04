@@ -160,6 +160,21 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 							'between' => '<div class="col-md-3">',
 							'after' => '</div>'
 						));
+                                                
+                                                
+                                                $options = $roles;
+						echo $this->Form->input('id_rol', array(
+							'required' => false,
+							'type' => 'select',							
+							'label' => false,
+							'options' => $options,
+							'class' => 'form-control',
+							'label' => array('text'=> 'Rol','class' => 'col-sm-2 control-label'),
+							'div' => array('class' => 'form-group'),
+							'between' => '<div class="col-md-3">',
+							'after' => '</div>'
+						));
+
 
 						echo $this->Form->input('id', array('type' => 'hidden'));
 

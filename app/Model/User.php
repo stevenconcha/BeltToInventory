@@ -139,6 +139,19 @@ class User extends AppModel {
             'dependent' => false,
             'conditions' => '',
         ),
+          'Sale' => array(
+            'className' => 'Sale',
+            'foreignKey' => 'user_id',
+            'dependent' => false,
+            'conditions' => '',
+            'fields' => '',
+            'order' => '',
+            'limit' => '',
+            'offset' => '',
+            'exclusive' => '',
+            'finderQuery' => '',
+            'counterQuery' => ''
+        ),
         'Inquiry' => array(
             'className' => 'Inquiry',
             'foreignKey' => 'id_usuario',
@@ -153,5 +166,7 @@ class User extends AppModel {
             'counterQuery' => ''
         )
     );
+
+   
 
 }

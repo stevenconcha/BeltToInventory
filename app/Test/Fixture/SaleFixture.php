@@ -10,18 +10,16 @@ class SaleFixture extends CakeTestFixture {
  * @var array
  */
 	public $fields = array(
-		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'unsigned' => false, 'key' => 'primary'),
-		'id_usuario' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 20, 'unsigned' => false),
-		'id_product' => array('type' => 'integer', 'null' => false, 'default' => null, 'unsigned' => false),
+
+		'id_prod' => array('type' => 'integer', 'null' => false, 'default' => null, 'unsigned' => false, 'key' => 'index'),
+		'fecha_venta' => array('type' => 'date', 'null' => false, 'default' => null),
 		'cantidad' => array('type' => 'integer', 'null' => false, 'default' => null, 'unsigned' => false),
-		'valor_unitario' => array('type' => 'integer', 'null' => false, 'default' => null, 'unsigned' => false),
-		'iva' => array('type' => 'integer', 'null' => false, 'default' => null, 'unsigned' => false),
-		'total' => array('type' => 'integer', 'null' => false, 'default' => null, 'unsigned' => false),
-		'fecha_venta' => array('type' => 'datetime', 'null' => false, 'default' => null),
 		'indexes' => array(
-			'PRIMARY' => array('column' => 'id', 'unique' => 1)
+			'PRIMARY' => array('column' => 'id', 'unique' => 1),
+			'FK_Products' => array('column' => 'id_prod', 'unique' => 0)
 		),
-		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
+		'tableParameters' => array('charset' => 'latin1', 'collate' => 'latin1_swedish_ci', 'engine' => 'InnoDB')
+
 	);
 
 /**
@@ -31,14 +29,9 @@ class SaleFixture extends CakeTestFixture {
  */
 	public $records = array(
 		array(
-			'id' => 1,
-			'id_usuario' => 1,
-			'id_product' => 1,
-			'cantidad' => 1,
-			'valor_unitario' => 1,
-			'iva' => 1,
-			'total' => 1,
-			'fecha_venta' => '2020-06-02 00:41:04'
+			'id_prod' => 1,
+			'fecha_venta' => '2020-06-03',
+			'cantidad' => 1
 		),
 	);
 
