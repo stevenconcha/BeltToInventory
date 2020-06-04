@@ -26,23 +26,37 @@ class ProductsController extends AppController {
      */
     public function index() {
 
-     if(!empty($this->request->data['Product']['keyword'])){
+        if (!empty($this->request->data['Product']['keyword'])) {
 
-        
-      $cond=array();
-       $cond['Product.nombre_prod LIKE'] = "%" . trim($this->request->data['Product']['keyword']) . "%";
-       $conditions['OR'] = $cond;
-       $this->paginate=array('conditions'=>$conditions,'limit'=>'10');
-        $result = $this->paginate('Product');
-       $this->set('products',$result);
-    
-     }else{
+
+            $cond = array();
+            $cond['Product.nombre_prod LIKE'] = "%" . trim($this->request->data['Product']['keyword']) . "%";
+            $conditions['OR'] = $cond;
+            $this->paginate = array('conditions' => $conditions, 'limit' => '10');
+            $result = $this->paginate('Product');
+            $this->set('products', $result);
+        } else {
+            $this->Product->recursive = 0;
+            $this->set('products', $this->Paginator->paginate());
+        }
+    }
+
+    public function listMostCash() {
+
+
+
+//
+//            $cond = array();
+//            $cond['Product.nombre_prod LIKE'] = "%" . trim($this->request->data['Product']['keyword']) . "%";
+//            $conditions['OR'] = $cond;
+//            $this->paginate = array('conditions' => $conditions, 'limit' => '10');
+//            $result = $this->paginate('Product');
+//            $this->set('products', $result);
         $this->Product->recursive = 0;
-        $this->set('products', $this->Paginator->paginate());
-     }
-  
-     
-        
+         //query example
+        //SELECT count(id) cantidad, nombre_prod  FROM products GROUP by id, nombre_prod ORDER by id desc limit 0, 10
+        $data = $this->Product->query('SELECT count(id), nombre_prod  FROM products gruop by id, nombre_prod ORDER by id desc');
+        $this->set('data', $data);
     }
 
     /**
@@ -68,41 +82,39 @@ class ProductsController extends AppController {
         $this->set('products', $product);
     }
 
+    function Search() {
 
-    function Search()
-{
-
-  echo "Entrooo a search ";
+        echo "Entrooo a search ";
         exit();
-   
-    if(!empty($this->request->data['Product']['keyword'])){
 
-      
-       $cond=array();
-       $cond['Product.nombre_prod LIKE'] = "%" . trim($this->request->data['Product']['keyword']) . "%";
-       $conditions['OR'] = $cond;
-       $this->paginate=array('conditions'=>$conditions,'limit'=>'10');
-        $result = $this->paginate('Product');
-           echo "<pre>";
-    print_r($result);
-    echo "</pre>";
-    exit();
-    $this->set('products',$result);
-     //  $this->request->params['named']['User.keyword'] = $this->request->data['User']['keyword'];
-     }
-    
- 
-    
+        if (!empty($this->request->data['Product']['keyword'])) {
 
-    /*
-    $keyword=$this->params->query($this->request->data['Product']['keyword']); //get keyword from querystring//
-    //used simpme or condition with singe value checking
-    //replace ModelName with actual name of your Appmodel
-   // $cond=array('OR'=>array("Product.phone LIKE '%$keyword%'","ModelName.name LIKE '%$keyword%'", "ModelName.email LIKE '%$keyword%'")  );
 
-    $list = $this->ModelName->find('all',array('conditions')=>$cond);
-    */
-}
+            $cond = array();
+            $cond['Product.nombre_prod LIKE'] = "%" . trim($this->request->data['Product']['keyword']) . "%";
+            $conditions['OR'] = $cond;
+            $this->paginate = array('conditions' => $conditions, 'limit' => '10');
+            $result = $this->paginate('Product');
+            echo "<pre>";
+            print_r($result);
+            echo "</pre>";
+            exit();
+            $this->set('products', $result);
+            //  $this->request->params['named']['User.keyword'] = $this->request->data['User']['keyword'];
+        }
+
+
+
+
+        /*
+          $keyword=$this->params->query($this->request->data['Product']['keyword']); //get keyword from querystring//
+          //used simpme or condition with singe value checking
+          //replace ModelName with actual name of your Appmodel
+          // $cond=array('OR'=>array("Product.phone LIKE '%$keyword%'","ModelName.name LIKE '%$keyword%'", "ModelName.email LIKE '%$keyword%'")  );
+
+          $list = $this->ModelName->find('all',array('conditions')=>$cond);
+         */
+    }
 
     /**
      * add method
@@ -133,7 +145,7 @@ class ProductsController extends AppController {
                     return $this->redirect(array('action' => 'index'));
                 }
             } else {
-               $this->Flash->error(__('El Producto no fue creado'));
+                $this->Flash->error(__('El Producto no fue creado'));
             }
         }
     }

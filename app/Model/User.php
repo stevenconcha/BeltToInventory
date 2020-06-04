@@ -1,10 +1,17 @@
-<?php 
-class User extends AppModel 
-{
+<?php
 
+App::uses('AppModel', 'Model');
+
+/**
+ * User Model
+ *
+ * @property Inquiry $Inquiry
+ */
+class User extends AppModel {
+
+    // The Associations below have been created with all possible keys, those that are not needed can be removed
 
     var $name = "User";
-
     var $validate = array(
         'firstname' => array(
             'firstname_must_not_be_blank' => array(
@@ -12,11 +19,11 @@ class User extends AppModel
                 'message' => 'El campo Nombres es requerido'
             ),
             'firstname_must_be_alphabet' => array(
-                'rule' =>  array('custom', '/^[a-zA-Z]*$/i'),
+                'rule' => array('custom', '/^[a-zA-Z]*$/i'),
                 'message' => 'El campo Nombres debe ser alfabetico'
             ),
             'firstname_must_be_max' => array(
-                'rule' =>  array('maxLength', 32),
+                'rule' => array('maxLength', 32),
                 'message' => 'El campo Nombres debe tener una longitud maxima de 32 caracteres.'
             )
         ),
@@ -26,11 +33,11 @@ class User extends AppModel
                 'message' => 'El campo Apellidos es requerido'
             ),
             'lastname_must_be_alphabet' => array(
-                'rule' =>  array('custom', '/^[a-zA-Z]*$/i'),
+                'rule' => array('custom', '/^[a-zA-Z]*$/i'),
                 'message' => 'El campo Apellidos debe ser alfabetico '
             ),
             'lastname_must_be_max' => array(
-                'rule' =>  array('maxLength', 32),
+                'rule' => array('maxLength', 32),
                 'message' => 'El campo Apellidos debe tener una longitud maxima de 32 caracteres.'
             )
         ),
@@ -113,14 +120,12 @@ class User extends AppModel
             ),
         ),
     );
-
-
- public function beforeSave($options = array()) {        
+    public function beforeSave($options = array()) {
         if (isset($this->data['User']['pass']) && $this->data['User']['pass'] != "") {
-            $this->data['User']['pass'] = AuthComponent::password($this->data['User']['pass']);            
+            $this->data['User']['pass'] = AuthComponent::password($this->data['User']['pass']);
         }
         return true;
-}
+    }
 
     /**
      * hasMany associations

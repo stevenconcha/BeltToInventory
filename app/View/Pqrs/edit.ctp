@@ -83,7 +83,6 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                         echo $this->Form->input('direccion', array('type' => 'hidden', "value" => $direccion));
                         echo $this->Form->input('fecha_finalizado', array('type' => 'hidden', "value" => $fecha_mod));
                         
-                        
                         echo $this->Form->input('id', array('type' => 'hidden'));
 
                         echo '<div class="col-sm-offset-2 col-sm-10">';

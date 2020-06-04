@@ -61,6 +61,7 @@ class Product extends AppModel {
             )
         )
     );
+
     /**
      * belongsTo associations
      *
@@ -75,6 +76,8 @@ class Product extends AppModel {
             'order' => ''
         )
     );
+    
+ 
 
      public $hasMany = array(
         'Sale' => array(
